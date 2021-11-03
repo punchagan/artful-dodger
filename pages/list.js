@@ -35,10 +35,20 @@ const LogoutButton = () => {
   return <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>;
 };
 
-const Entries = ({ data }) => {
+const Entries = ({ metadataUrl }) => {
+  const [data, setData] = useState([]);
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  console.log(user, isLoading, isAuthenticated);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+    fetch(metadataUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, [isAuthenticated]);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -74,23 +84,12 @@ const AuthProvider = ({ children, config }) => {
 };
 
 export default function Home({ config }) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // FIXME: Make the document URL configurable
-    fetch("https://opensheet.vercel.app/XXX/metadata")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
   return (
     <AuthProvider config={config}>
       <LoginButton />
       <LogoutButton />
       <Profile />
-      <Entries data={data} />
+      <Entries metadataUrl={config.metadataUrl} />
     </AuthProvider>
   );
 }
@@ -101,6 +100,7 @@ export async function getStaticProps() {
       process.env.NODE_ENV === "production"
         ? "https://artful-dodger.muse-amuse.in"
         : "http://localhost:3000",
+    metadataUrl: process.env.METADATA_URL || "",
   };
   return {
     props: {
