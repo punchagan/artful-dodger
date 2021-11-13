@@ -77,7 +77,11 @@ const AuthProvider = ({ children, config }) => {
   });
 
   return (
-    <Auth0Provider domain="XXX" clientId="XXX" redirectUri={`${config.hostname}/list`}>
+    <Auth0Provider
+      domain={config.auth0Domain}
+      clientId={config.auth0ClientId}
+      redirectUri={`${config.hostname}/list`}
+    >
       {children}
     </Auth0Provider>
   );
@@ -101,6 +105,8 @@ export async function getStaticProps() {
         ? "https://artful-dodger.muse-amuse.in"
         : "http://localhost:3000",
     metadataUrl: process.env.METADATA_URL || "",
+    auth0Domain: process.env.AUTH0_DOMAIN || "",
+    auth0ClientId: process.env.AUTH0_CLIENT_ID || "",
   };
   return {
     props: {
