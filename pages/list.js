@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Layout from "../components/layout";
 import { useState, useEffect } from "react";
 
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -88,14 +88,16 @@ const AuthProvider = ({ children, config }) => {
   );
 };
 
-export default function Home({ config }) {
+export default function List({ config }) {
   return (
-    <AuthProvider config={config}>
-      <LoginButton />
-      <LogoutButton />
-      <Profile />
-      <Entries metadataUrl={config.metadataUrl} />
-    </AuthProvider>
+    <Layout>
+      <AuthProvider config={config}>
+        <LoginButton />
+        <LogoutButton />
+        <Profile />
+        <Entries metadataUrl={config.metadataUrl} />
+      </AuthProvider>
+    </Layout>
   );
 }
 
