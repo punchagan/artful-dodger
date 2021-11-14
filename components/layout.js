@@ -2,7 +2,7 @@ import Link from "next/link";
 import Head from "next/head";
 import "antd/dist/antd.css";
 
-export default function Layout({ children, title = "This is the default title" }) {
+export default function BaseLayout({ children, title = "This is the default title" }) {
   return (
     <div>
       <Head>

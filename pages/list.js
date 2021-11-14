@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import BaseLayout from "../components/layout";
 import { useState, useEffect } from "react";
 
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -90,14 +90,14 @@ const AuthProvider = ({ children, config }) => {
 
 export default function List({ config }) {
   return (
-    <Layout>
+    <BaseLayout>
       <AuthProvider config={config}>
         <LoginButton />
         <LogoutButton />
         <Profile />
         <Entries metadataUrl={config.metadataUrl} />
       </AuthProvider>
-    </Layout>
+    </BaseLayout>
   );
 }
 

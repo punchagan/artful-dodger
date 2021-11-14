@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Layout from "../components/layout";
+import BaseLayout from "../components/layout";
 
 export default function About() {
   return (
-    <Layout>
+    <BaseLayout>
       <div className="container">
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
@@ -27,6 +27,6 @@ export default function About() {
 
         <p>Contact us at 999999999 theartfuldodger@gmail.com</p>
       </div>
-    </Layout>
+    </BaseLayout>
   );
 }
