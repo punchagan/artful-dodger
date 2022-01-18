@@ -8,7 +8,11 @@ export default function Gallery({ config }) {
   const [photos, setPhotos] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false);
-  const openGallery = () => setIsOpen(true);
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const openGalleryPhoto = (idx) => {
+    setActivePhotoIndex(idx);
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     fetch(config.metadataUrl)
@@ -35,8 +39,9 @@ export default function Gallery({ config }) {
 
   return (
     <BaseLayout>
-      <Entries data={photos} onClick={openGallery} />
+      <Entries data={photos} openGalleryPhoto={openGalleryPhoto} />
       <ReactBnbGallery
+        activePhotoIndex={activePhotoIndex}
         show={isOpen}
         photos={photos}
         onClose={() => setIsOpen(false)}

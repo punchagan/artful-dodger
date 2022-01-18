@@ -1,6 +1,6 @@
 import { Image, Row, Col } from "antd";
 
-export default function Entries({ data, onClick }) {
+export default function Entries({ data, openGalleryPhoto }) {
   return (
     <Row
       justify="center"
@@ -12,7 +12,7 @@ export default function Entries({ data, onClick }) {
     >
       {data.map((row, idx) => (
         <Col className="gutter-row" key={idx} span={8}>
-          <Image onClick={onClick} preview={false} src={row.photo} />
+          <Image onClick={() => openGalleryPhoto(idx)} preview={false} src={row.photo} />
         </Col>
       ))}
     </Row>
