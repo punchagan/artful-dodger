@@ -22,7 +22,7 @@ export default function BaseLayout({ children, title = "This is the default titl
               <Link href="/about">About</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link href="/list">Gallery</Link>
+              <Link href="/gallery">Gallery</Link>
             </Menu.Item>
           </Menu>
         </Header>

@@ -2,7 +2,7 @@ import BaseLayout from "../components/layout";
 import Entries from "../components/entries";
 import { useState, useEffect } from "react";
 
-export default function List({ config }) {
+export default function Gallery({ config }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
