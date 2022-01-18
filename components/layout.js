@@ -13,7 +13,8 @@ export default function BaseLayout({ children, title = "This is the default titl
       </Head>
       <Layout>
         <Header>
-          <Menu mode="horizontal">
+          <div className="logo" />
+          <Menu theme="dark" mode="horizontal">
             <Menu.Item key="1">
               <Link href="/">The Artful Dodger</Link>
             </Menu.Item>
