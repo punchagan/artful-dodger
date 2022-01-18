@@ -21,16 +21,18 @@ export default function Gallery({ config }) {
         const photos = data.map((p, idx) => {
           const photo = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
           // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`
+          // FIXME: Add sold status?
+          const caption = `${p.title} by ${p.artist}`;
+          // FIXME: Add real description/price? Sold status?
+          const description = p.description || "Excellent work of art";
+          const subcaption = `${description} (Price: ₹ ${p.price})`;
           return {
             ...p,
             photo,
             thumbnail: photo,
             number: idx,
-            // FIXME: Add artist name? Sold status?
-            caption: p.title,
-            // FIXME: Add real description/price? Sold status?
-            subcaption:
-              p.description || "Excellent work of art by Charles Dickens. (Price: Rs. 9999)",
+            caption,
+            subcaption,
           };
         });
         setPhotos(photos);
@@ -46,7 +48,8 @@ export default function Gallery({ config }) {
         photos={photos}
         onClose={() => setIsOpen(false)}
         wrap={false}
-        backgroundColor="#000000"
+        opacity="0.98"
+        backgroundColor="#888888"
       />
     </BaseLayout>
   );
