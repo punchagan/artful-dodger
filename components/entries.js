@@ -1,6 +1,6 @@
 import { Image, Row, Col } from "antd";
 
-export default function Entries({ data }) {
+export default function Entries({ data, onClick }) {
   return (
     <Row
       justify="center"
@@ -12,8 +12,7 @@ export default function Entries({ data }) {
     >
       {data.map((row, idx) => (
         <Col className="gutter-row" key={idx} span={8}>
-          <Image preview={false} src={`https://drive.google.com/thumbnail?id=${row.thumbnail}`} />
-          {/* <img src={`https://lh3.googleusercontent.com/d/${row.thumbnail}=s1980`} /> */}
+          <Image onClick={onClick} preview={false} src={row.photo} />
         </Col>
       ))}
     </Row>
