@@ -3,9 +3,11 @@ import Entries from "../components/entries";
 import { useState, useEffect } from "react";
 import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Gallery({ config }) {
   const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
@@ -36,11 +38,13 @@ export default function Gallery({ config }) {
           };
         });
         setPhotos(photos);
+        setLoading(false);
       });
   }, []);
 
   return (
     <BaseLayout>
+      {loading && <LoadingOutlined />}
       <Entries data={photos} openGalleryPhoto={openGalleryPhoto} />
       <ReactBnbGallery
         activePhotoIndex={activePhotoIndex}
