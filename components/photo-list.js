@@ -69,6 +69,7 @@ export default function PhotoList({ metadataUrl, transform }) {
           {photos.map((photo, idx) => (
             <Image
               onClick={() => openGalleryPhoto(idx)}
+              key={idx}
               alt={photo.caption}
               preview={false}
               src={photo.thumbnail}
