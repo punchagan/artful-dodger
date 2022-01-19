@@ -1,6 +1,6 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
-import Entries from "../components/entries";
+import PhotoList from "../components/photo-list";
 import { useState, useEffect } from "react";
 import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
@@ -50,7 +50,7 @@ export default function Home({ config }) {
         <p className="description">We consign, commission, buy and sell art.</p>
       </main>
       {loading && <LoadingOutlined />}
-      <Entries data={photos} openGalleryPhoto={openGalleryPhoto} />
+      <PhotoList data={photos} openGalleryPhoto={openGalleryPhoto} />
       <ReactBnbGallery
         activePhotoIndex={activePhotoIndex}
         show={isOpen}

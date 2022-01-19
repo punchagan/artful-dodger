@@ -8,7 +8,7 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
-export default function Entries({ data, openGalleryPhoto }) {
+export default function PhotoList({ data, openGalleryPhoto }) {
   return (
     <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
       <Masonry gutter={4}>
