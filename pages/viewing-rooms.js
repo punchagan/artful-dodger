@@ -3,7 +3,7 @@ import BaseLayout from "../components/layout";
 import PhotoList, { usePhotos } from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
-import { Image, Row, Col, Card, Avatar, PageHeader } from "antd";
+import { Image, Row, Col, Card, Avatar, PageHeader, Typography, Space } from "antd";
 
 export default function Rooms({ config }) {
   const { loading, photos } = usePhotos(config.metadataUrl);
@@ -41,15 +41,15 @@ export default function Rooms({ config }) {
             <Col className="gutter-row" style={{ textAlign: "center" }} key={idx} span={8}>
               <Card>
                 <Link href={href}>
-                  <Avatar
-                    shape="square"
-                    size={{ xs: 128, sm: 128, md: 256, lg: 256, xl: 256, xxl: 256 }}
-                    src={photo.thumbnail}
-                  />
+                  <Space direction="vertical">
+                    <Avatar
+                      shape="square"
+                      size={{ xs: 128, sm: 128, md: 256, lg: 256, xl: 256, xxl: 256 }}
+                      src={photo.thumbnail}
+                    />
+                    <Typography.Text>{photo.title}</Typography.Text>
+                  </Space>
                 </Link>
-                <div>
-                  <Link href={href}>{photo.title}</Link>
-                </div>
               </Card>
             </Col>
           );
