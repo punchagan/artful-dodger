@@ -1,4 +1,3 @@
-import Head from "next/head";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
