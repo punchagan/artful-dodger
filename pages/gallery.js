@@ -25,7 +25,6 @@ export default function Gallery({ config }) {
           // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`
           // FIXME: Add sold status?
           const caption = `${p.title} by ${p.artist}`;
-          // FIXME: Add real description/price? Sold status?
           const description = p.description || "Excellent work of art";
           const subcaption = `${description} (Price: ₹ ${p.price})`;
           return {
