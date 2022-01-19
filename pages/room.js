@@ -5,7 +5,7 @@ import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
 import { PageHeader } from "antd";
 
-export default function Home({ config }) {
+export default function Room({ config }) {
   const router = useRouter();
   const { name } = router.query;
   const title = name ? tagToTitle(name) : "";
