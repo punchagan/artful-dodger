@@ -21,9 +21,6 @@ export default function BaseLayout({ children, title = "This is the default titl
             <Menu.Item key="2">
               <Link href="/about">About</Link>
             </Menu.Item>
-            <Menu.Item key="3">
-              <Link href="/gallery">Gallery</Link>
-            </Menu.Item>
           </Menu>
         </Header>
         <Content>{children}</Content>
