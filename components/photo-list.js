@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Image, Row, Col } from "antd";
+import { Image } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
@@ -20,8 +20,10 @@ const transformData = (p, number) => {
   const caption = `${p.title} by ${p.artist}`;
   const description = p.description || "Excellent work of art";
   const subcaption = `${description} (Price: ₹ ${p.price})`;
+  const tags = p.viewing_rooms.split(";").map((x) => x.trim());
   return {
     ...p,
+    tags,
     photo,
     thumbnail,
     number,

@@ -19,6 +19,9 @@ export default function BaseLayout({ children, title = "This is the default titl
               <Link href="/">The Artful Dodger</Link>
             </Menu.Item>
             <Menu.Item key="2">
+              <Link href="/viewing-rooms">Viewing Rooms</Link>
+            </Menu.Item>
+            <Menu.Item key="3">
               <Link href="/about">About</Link>
             </Menu.Item>
           </Menu>
