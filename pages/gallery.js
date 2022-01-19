@@ -20,7 +20,7 @@ export default function Gallery({ config }) {
     fetch(config.metadataUrl)
       .then((res) => res.json())
       .then((data) => {
-        const photos = data.map((p, idx) => {
+        const photos = data.map((p, number) => {
           const thumbnail = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
           const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
           // FIXME: Add sold status?
@@ -31,7 +31,7 @@ export default function Gallery({ config }) {
             ...p,
             photo,
             thumbnail,
-            number: idx,
+            number,
             caption,
             subcaption,
           };
