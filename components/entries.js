@@ -12,7 +12,7 @@ export default function Entries({ data, openGalleryPhoto }) {
     >
       {data.map((row, idx) => (
         <Col className="gutter-row" key={idx} span={8}>
-          <Image onClick={() => openGalleryPhoto(idx)} preview={false} src={row.photo} />
+          <Image onClick={() => openGalleryPhoto(idx)} preview={false} src={row.thumbnail} />
         </Col>
       ))}
     </Row>

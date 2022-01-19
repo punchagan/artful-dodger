@@ -21,8 +21,8 @@ export default function Gallery({ config }) {
       .then((res) => res.json())
       .then((data) => {
         const photos = data.map((p, idx) => {
-          const photo = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
-          // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`
+          const thumbnail = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
+          const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
           // FIXME: Add sold status?
           const caption = `${p.title} by ${p.artist}`;
           const description = p.description || "Excellent work of art";
@@ -30,7 +30,7 @@ export default function Gallery({ config }) {
           return {
             ...p,
             photo,
-            thumbnail: photo,
+            thumbnail,
             number: idx,
             caption,
             subcaption,
