@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Image, Row, Col } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ReactBnbGallery from "react-bnb-gallery";
@@ -12,7 +12,7 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
-export const transformData = (p, number) => {
+const transformData = (p, number) => {
   const thumbnail = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
   // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
   const photo = `https://drive.google.com/uc?export=view&id=${p.thumbnail}`;
@@ -30,7 +30,26 @@ export const transformData = (p, number) => {
   };
 };
 
-export default function PhotoList({ photos, loading }) {
+export const usePhotos = (url) => {
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        const photos = data.map(transformData);
+        setPhotos(photos);
+        setLoading(false);
+      });
+  }, []);
+
+  return { loading, photos };
+};
+
+export default function PhotoList({ metadataUrl }) {
+  const { loading, photos } = usePhotos(metadataUrl);
+
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
   const openGalleryPhoto = (idx) => {
