@@ -1,6 +1,7 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
+import { pageStaticProps } from "../lib/page-utils";
 
 export default function Home({ config }) {
   return (
@@ -14,13 +15,4 @@ export default function Home({ config }) {
   );
 }
 
-export async function getStaticProps() {
-  const config = {
-    metadataUrl: process.env.METADATA_URL || "",
-  };
-  return {
-    props: {
-      config,
-    },
-  };
-}
+export const getStaticProps = pageStaticProps;
