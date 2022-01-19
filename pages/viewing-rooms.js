@@ -39,7 +39,7 @@ export default function Rooms({ config }) {
                 src={photo.thumbnail}
               />
               <div>
-                <Link href="#">{photo.title}</Link>
+                <Link href={`/room/?name=${photo.tag}`}>{photo.title}</Link>
               </div>
             </Card>
           </Col>

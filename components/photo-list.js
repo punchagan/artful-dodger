@@ -49,8 +49,9 @@ export const usePhotos = (url) => {
   return { loading, photos };
 };
 
-export default function PhotoList({ metadataUrl }) {
-  const { loading, photos } = usePhotos(metadataUrl);
+export default function PhotoList({ metadataUrl, transform }) {
+  const { loading, photos: data } = usePhotos(metadataUrl);
+  const photos = transform ? transform(data) : data;
 
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
