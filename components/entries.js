@@ -11,7 +11,7 @@ export default function Entries({ data, openGalleryPhoto }) {
       ]}
     >
       {data.map((row, idx) => (
-        <Col className="gutter-row" key={idx} span={8}>
+        <Col className="gutter-row" style={{ textAlign: "center" }} key={idx} span={8}>
           <Image
             onClick={() => openGalleryPhoto(idx)}
             alt={row.caption}
