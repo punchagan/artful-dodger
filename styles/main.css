@@ -4,3 +4,7 @@
   padding: 24px;
   margin: auto;
 }
+
+.gallery-figcaption--info .photo-caption {
+  color: white;
+}

@@ -52,8 +52,8 @@ export default function Gallery({ config }) {
         photos={photos}
         onClose={() => setIsOpen(false)}
         wrap={false}
-        opacity="0.98"
-        backgroundColor="#888888"
+        opacity="0.95"
+        backgroundColor="#000000"
       />
     </BaseLayout>
   );
