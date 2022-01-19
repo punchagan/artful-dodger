@@ -1,9 +1,15 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
+import { PageHeader } from "antd";
 
 export default function About() {
   return (
     <BaseLayout>
+      <PageHeader
+        title="About"
+        subTitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+        backIcon={false}
+      />
       <div className="container">
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has

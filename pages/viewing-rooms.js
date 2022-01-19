@@ -3,7 +3,7 @@ import BaseLayout from "../components/layout";
 import PhotoList, { usePhotos } from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
-import { Image, Row, Col, Card, Avatar } from "antd";
+import { Image, Row, Col, Card, Avatar, PageHeader } from "antd";
 
 export default function Rooms({ config }) {
   const { loading, photos } = usePhotos(config.metadataUrl);
@@ -22,6 +22,11 @@ export default function Rooms({ config }) {
 
   return (
     <BaseLayout>
+      <PageHeader
+        title="Viewing Rooms"
+        subTitle="View curated collections of art"
+        backIcon={false}
+      />
       <Row
         justify="center"
         align="middle"

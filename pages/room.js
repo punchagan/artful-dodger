@@ -3,6 +3,7 @@ import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
+import { PageHeader } from "antd";
 
 export default function Home({ config }) {
   const router = useRouter();
@@ -12,9 +13,7 @@ export default function Home({ config }) {
 
   return (
     <BaseLayout>
-      <main>
-        <h1 className="title">{title}</h1>
-      </main>
+      <PageHeader title={title} backIcon={false} />
       <PhotoList metadataUrl={config.metadataUrl} transform={transform} />
     </BaseLayout>
   );
