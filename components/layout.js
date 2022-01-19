@@ -23,7 +23,7 @@ export default function BaseLayout({ children, title = "This is the default titl
             </Menu.Item>
           </Menu>
         </Header>
-        <Content>{children}</Content>
+        <Content style={{ minWidth: "60%" }}>{children}</Content>
         <Footer></Footer>
       </Layout>
     </>
