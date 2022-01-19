@@ -35,20 +35,25 @@ export default function Rooms({ config }) {
           { xs: 16, sm: 24, md: 32, lg: 40, xl: 40, xxl: 40 },
         ]}
       >
-        {metadata.map((photo, idx) => (
-          <Col className="gutter-row" style={{ textAlign: "center" }} key={idx} span={8}>
-            <Card>
-              <Avatar
-                shape="square"
-                size={{ xs: 128, sm: 128, md: 256, lg: 256, xl: 256, xxl: 256 }}
-                src={photo.thumbnail}
-              />
-              <div>
-                <Link href={`/room/?name=${photo.tag}`}>{photo.title}</Link>
-              </div>
-            </Card>
-          </Col>
-        ))}
+        {metadata.map((photo, idx) => {
+          let href = `/room/?name=${photo.tag}`;
+          return (
+            <Col className="gutter-row" style={{ textAlign: "center" }} key={idx} span={8}>
+              <Card>
+                <Link href={href}>
+                  <Avatar
+                    shape="square"
+                    size={{ xs: 128, sm: 128, md: 256, lg: 256, xl: 256, xxl: 256 }}
+                    src={photo.thumbnail}
+                  />
+                </Link>
+                <div>
+                  <Link href={href}>{photo.title}</Link>
+                </div>
+              </Card>
+            </Col>
+          );
+        })}
       </Row>
     </BaseLayout>
   );
