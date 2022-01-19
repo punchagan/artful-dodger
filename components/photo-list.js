@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Image } from "antd";
+import { Image, Spin } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
-import { LoadingOutlined } from "@ant-design/icons";
 
 // Breakpoint widths taken from https://ant.design/components/layout/
 const columnsCountBreakPoints = {
@@ -61,7 +60,7 @@ export default function PhotoList({ metadataUrl, transform }) {
   };
 
   return loading ? (
-    <LoadingOutlined />
+    <Spin />
   ) : (
     <>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
