@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Image, Spin } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import ReactBnbGallery from "react-bnb-gallery";
-import "react-bnb-gallery/dist/style.css";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 // Breakpoint widths taken from https://ant.design/components/layout/
 const columnsCountBreakPoints = {
@@ -24,6 +24,7 @@ const transformData = (p, number) => {
     ...p,
     tags,
     photo,
+    original: photo,
     thumbnail,
     number,
     caption,
@@ -58,6 +59,12 @@ export default function PhotoList({ metadataUrl, transform }) {
     setActivePhotoIndex(idx);
     setIsOpen(true);
   };
+  const activePhoto = photos[activePhotoIndex];
+  const nextIdx = (activePhotoIndex + photos.length + 1) % photos.length;
+  const nextPhoto = photos[nextIdx];
+  const prevIdx = (activePhotoIndex + photos.length - 1) % photos.length;
+  const prevPhoto = photos[prevIdx];
+  const activeTitle = `${activePhoto?.caption} — ${activePhoto?.subcaption}`;
 
   return loading ? (
     <Spin />
@@ -76,15 +83,23 @@ export default function PhotoList({ metadataUrl, transform }) {
           ))}
         </Masonry>
       </ResponsiveMasonry>
-      <ReactBnbGallery
-        activePhotoIndex={activePhotoIndex}
-        show={isOpen}
-        photos={photos}
-        onClose={() => setIsOpen(false)}
-        wrap={false}
-        opacity="0.95"
-        backgroundColor="#000000"
-      />
+      {isOpen && (
+        <Lightbox
+          onCloseRequest={() => setIsOpen(false)}
+          mainSrc={activePhoto.photo}
+          nextSrc={nextPhoto.photo}
+          prevSrc={prevPhoto.photo}
+          mainSrcThumbnail={activePhoto.thumbnail}
+          nextSrcThumbnail={nextPhoto.thumbnail}
+          prevSrcThumbnail={prevPhoto.thumbnail}
+          imageTitle={activePhoto.caption}
+          imageCaption={activePhoto.subcaption}
+          enableZoom={false}
+          imagePadding={50}
+          onMovePrevRequest={() => setActivePhotoIndex(prevIdx)}
+          onMoveNextRequest={() => setActivePhotoIndex(nextIdx)}
+        />
+      )}
     </>
   );
 }
