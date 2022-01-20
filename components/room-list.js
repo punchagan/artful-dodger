@@ -3,18 +3,40 @@ import RoomList from "../components/room-list";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
 import { Image, Row, Col, Card, Avatar, Typography, Space, Spin } from "antd";
 
+const findFirstMissing = (photos, metadata) => {
+  const previousThumbnails = new Set(metadata.map((it) => it.thumbnail));
+  return photos.find((it) => !previousThumbnails.has(it.thumbnail));
+};
+
+export const extraRooms = [
+  { title: "Entire Collection", tag: "all" },
+  { title: "Sold", tag: "sold" },
+];
 export default function Rooms({ photos, loading }) {
   const tags = Array.from(new Set(photos.map((x) => x.tags).flat())).sort();
-  const metadata = tags.map((tag) => {
-    const title = tagToTitle(tag);
-    const tagPhotos = photos.filter(tagFilter(tag)).sort((a, b) => a.tags.length - b.tags.length);
-    return tag.length > 0
-      ? { ...tagPhotos[0], title, tag }
-      : {
-          thumbnail: `https://placehold.jp/30/777777/ffffff/300x150.png?text=${title}`,
-          title,
-          tag,
-        };
+  const tagRooms = tags.map((tag) => ({ title: tagToTitle(tag), tag }));
+  const rooms = tagRooms.concat(extraRooms);
+  const metadata = [];
+
+  let meta;
+  rooms.forEach((room, idx) => {
+    switch (room.tag) {
+      case "all":
+        meta = findFirstMissing(photos, metadata);
+        break;
+
+      case "sold":
+        meta = findFirstMissing(
+          photos.filter((p) => p.sold === "y"),
+          metadata
+        );
+        break;
+
+      default:
+        meta = findFirstMissing(photos.filter(tagFilter(room.tag)), metadata);
+        break;
+    }
+    metadata.push({ ...meta, title: room.title, tag: room.tag });
   });
 
   return loading ? (
