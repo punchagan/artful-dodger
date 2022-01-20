@@ -15,10 +15,10 @@ const transformData = (p, number) => {
   const thumbnail = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
   // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
   const photo = `https://drive.google.com/uc?export=view&id=${p.thumbnail}`;
-  // FIXME: Add sold status?
   const caption = `${p.title} by ${p.artist}`;
   const description = p.description || "Excellent work of art";
-  const subcaption = `${description} (Price: ₹ ${p.price})`;
+  const subcaption =
+    p.sold === "y" ? `${description} (Sold)` : `${description} (Price: ₹ ${p.price})`;
   const tags = p.viewing_rooms.split(";").map((x) => x.trim());
   return {
     ...p,
