@@ -19,8 +19,10 @@ const photoUrl = (id) => `https://drive.google.com/uc?export=view&id=${id}`;
 const transformData = (p, number) => {
   const thumbnail = thumbnailUrl(p.thumbnail);
   const photo = photoUrl(p.thumbnail);
-  const caption = `${p.title} by ${p.artist}`;
-  const subcaption = p.sold === "y" ? `(Sold)` : `(Price: ₹ ${p.price})`;
+  const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
+  const title = `${p.title} by ${p.artist}`;
+  const captionTags = [`${p.medium}`, `${p.size}`, `${price}`];
+  const caption = captionTags.map((ct, idx) => <Tag key={idx}>{ct}</Tag>);
   const tags = p.viewing_rooms
     .split(";")
     .map((x) => x.trim())
@@ -35,15 +37,14 @@ const transformData = (p, number) => {
   const extraPhotos = extraThumbnailIDs.map(photoUrl);
   return {
     ...p,
+    title,
     tags,
     photo,
-    original: photo,
     thumbnail,
     extraThumbnails,
     extraPhotos,
     number,
     caption,
-    subcaption,
   };
 };
 
@@ -134,7 +135,7 @@ export default function PhotoList({ metadataUrl, transform }) {
             <Image
               onClick={() => openGalleryPhoto(idx)}
               key={idx}
-              alt={photo.caption}
+              alt={photo.title}
               preview={false}
               src={photo.thumbnail}
             />
@@ -150,8 +151,8 @@ export default function PhotoList({ metadataUrl, transform }) {
           mainSrcThumbnail={activeThumbnail}
           nextSrcThumbnail={nextThumbnail}
           prevSrcThumbnail={prevThumbnail}
-          imageTitle={activePhoto.caption}
-          imageCaption={activePhoto.subcaption}
+          imageTitle={activePhoto.title}
+          imageCaption={activePhoto.caption}
           enableZoom={false}
           imagePadding={50}
           toolbarButtons={toolbarButtons}
