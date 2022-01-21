@@ -20,9 +20,7 @@ const transformData = (p, number) => {
   const thumbnail = thumbnailUrl(p.thumbnail);
   const photo = photoUrl(p.thumbnail);
   const caption = `${p.title} by ${p.artist}`;
-  const description = p.description || "Excellent work of art";
-  const subcaption =
-    p.sold === "y" ? `${description} (Sold)` : `${description} (Price: ₹ ${p.price})`;
+  const subcaption = p.sold === "y" ? `(Sold)` : `(Price: ₹ ${p.price})`;
   const tags = p.viewing_rooms
     .split(";")
     .map((x) => x.trim())
