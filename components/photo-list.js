@@ -138,6 +138,7 @@ export default function PhotoList({ metadataUrl, transform }) {
               alt={photo.title}
               preview={false}
               src={photo.thumbnail}
+              fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
             />
           ))}
         </Masonry>
