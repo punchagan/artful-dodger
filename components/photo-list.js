@@ -12,9 +12,8 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
-const thumbnailUrl = (id) => `https://drive.google.com/thumbnail?id=${id}`;
-// Alternate URL: `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
-const photoUrl = (id) => `https://drive.google.com/uc?export=view&id=${id}`;
+const thumbnailUrl = (id) => `/thumbnail/${id}`;
+const photoUrl = (id) => `/image/${id}`;
 
 const transformData = (p, number) => {
   const thumbnail = thumbnailUrl(p.thumbnail);
