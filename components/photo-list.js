@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Image, Spin } from "antd";
+import { Image, Spin, Tag } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -59,12 +59,16 @@ export default function PhotoList({ metadataUrl, transform }) {
     setActivePhotoIndex(idx);
     setIsOpen(true);
   };
+  const n = photos.length;
   const activePhoto = photos[activePhotoIndex];
-  const nextIdx = (activePhotoIndex + photos.length + 1) % photos.length;
+  const nextIdx = (activePhotoIndex + n + 1) % n;
   const nextPhoto = photos[nextIdx];
-  const prevIdx = (activePhotoIndex + photos.length - 1) % photos.length;
+  const prevIdx = (activePhotoIndex + n - 1) % n;
   const prevPhoto = photos[prevIdx];
   const activeTitle = `${activePhoto?.caption} — ${activePhoto?.subcaption}`;
+
+  const count = <Tag>{`${activePhotoIndex + 1} of ${n}`}</Tag>;
+  const toolbarButtons = [count];
 
   return loading ? (
     <Spin />
@@ -96,6 +100,7 @@ export default function PhotoList({ metadataUrl, transform }) {
           imageCaption={activePhoto.subcaption}
           enableZoom={false}
           imagePadding={50}
+          toolbarButtons={toolbarButtons}
           onMovePrevRequest={() => setActivePhotoIndex(prevIdx)}
           onMoveNextRequest={() => setActivePhotoIndex(nextIdx)}
         />
