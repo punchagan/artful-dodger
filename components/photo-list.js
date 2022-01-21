@@ -12,12 +12,14 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
-const thumbnailUrl = (id) => `/thumbnail/${id}`;
-const photoUrl = (id) => `/image/${id}`;
+const devEnv = process.env.NODE_ENV !== "production";
+const thumbnailUrl = (id, imagePrefix) =>
+  devEnv ? `/thumbnail/${id}` : `${imagePrefix}/thumbnail/${id}`;
+const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
 
-const transformData = (p, number) => {
-  const thumbnail = thumbnailUrl(p.thumbnail);
-  const photo = photoUrl(p.thumbnail);
+const transformData = (p, number, imagePrefix) => {
+  const thumbnail = thumbnailUrl(p.thumbnail, imagePrefix);
+  const photo = photoUrl(p.thumbnail, imagePrefix);
   const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
   const title = `${p.title} by ${p.artist}`;
   const captionTags = [`${p.medium}`, `${p.size}`, `${price}`];
@@ -32,8 +34,8 @@ const transformData = (p, number) => {
       .map((x) => x.trim())
       .filter((it) => it !== "")
   );
-  const extraThumbnails = extraThumbnailIDs.map(thumbnailUrl);
-  const extraPhotos = extraThumbnailIDs.map(photoUrl);
+  const extraThumbnails = extraThumbnailIDs.map((id) => thumbnailUrl(id, imagePrefix));
+  const extraPhotos = extraThumbnailIDs.map((id) => photoUrl(id, imagePrefix));
   return {
     ...p,
     title,
@@ -47,7 +49,7 @@ const transformData = (p, number) => {
   };
 };
 
-export const usePhotos = (url) => {
+export const usePhotos = (url, imagePrefix) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -55,7 +57,7 @@ export const usePhotos = (url) => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const photos = data.map(transformData);
+        const photos = data.map((d, idx) => transformData(d, idx, imagePrefix));
         setPhotos(photos);
         setLoading(false);
       });
@@ -64,8 +66,8 @@ export const usePhotos = (url) => {
   return { loading, photos };
 };
 
-export default function PhotoList({ metadataUrl, transform }) {
-  const { loading, photos: data } = usePhotos(metadataUrl);
+export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
+  const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const photos = transform ? transform(data) : data;
 
   const [isOpen, setIsOpen] = useState(false);

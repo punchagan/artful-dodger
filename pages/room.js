@@ -27,7 +27,11 @@ export default function Room({ config }) {
   return (
     <BaseLayout>
       <PageHeader title={title} backIcon={false} />
-      <PhotoList metadataUrl={config.metadataUrl} transform={transform} />
+      <PhotoList
+        metadataUrl={config.metadataUrl}
+        imagePrefix={config.imagePrefix}
+        transform={transform}
+      />
     </BaseLayout>
   );
 }

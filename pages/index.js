@@ -11,7 +11,7 @@ export default function Home({ config }) {
         subTitle="We consign, commission, buy and sell art"
         backIcon={false}
       />
-      <PhotoList metadataUrl={config.metadataUrl} />
+      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={config.imagePrefix} />
     </BaseLayout>
   );
 }

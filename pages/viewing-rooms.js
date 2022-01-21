@@ -5,7 +5,7 @@ import { pageStaticProps } from "../lib/page-utils";
 import { PageHeader } from "antd";
 
 export default function Rooms({ config }) {
-  const { loading, photos } = usePhotos(config.metadataUrl);
+  const { loading, photos } = usePhotos(config.metadataUrl, config.imagePrefix);
   return (
     <BaseLayout>
       <PageHeader title="Viewing Rooms" subTitle="View curated collections of art" />
