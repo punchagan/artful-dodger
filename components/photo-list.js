@@ -11,10 +11,13 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
+const thumbnailUrl = (id) => `https://drive.google.com/thumbnail?id=${id}`;
+// Alternate URL: `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
+const photoUrl = (id) => `https://drive.google.com/uc?export=view&id=${id}`;
+
 const transformData = (p, number) => {
-  const thumbnail = `https://drive.google.com/thumbnail?id=${p.thumbnail}`;
-  // const photo = `https://lh3.googleusercontent.com/d/${p.thumbnail}=s1980`;
-  const photo = `https://drive.google.com/uc?export=view&id=${p.thumbnail}`;
+  const thumbnail = thumbnailUrl(p.thumbnail);
+  const photo = photoUrl(p.thumbnail);
   const caption = `${p.title} by ${p.artist}`;
   const description = p.description || "Excellent work of art";
   const subcaption =
