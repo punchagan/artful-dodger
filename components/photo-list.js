@@ -137,6 +137,7 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
               key={idx}
               alt={photo.title}
               preview={false}
+              style={{ cursor: "pointer" }}
               src={photo.thumbnail}
               fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
             />

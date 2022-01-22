@@ -56,11 +56,12 @@ export default function Rooms({ photos, loading }) {
               <Link href={href}>
                 <Space direction="vertical">
                   <Avatar
+                    style={{ cursor: "pointer" }}
                     shape="square"
                     size={{ xs: 96, sm: 128, md: 128, lg: 256, xl: 256, xxl: 256 }}
                     src={photo.thumbnail}
                   />
-                  <Typography.Text>{photo.title}</Typography.Text>
+                  <Typography.Text style={{ cursor: "pointer" }}>{photo.title}</Typography.Text>
                 </Space>
               </Link>
             </Card>
