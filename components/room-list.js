@@ -42,18 +42,11 @@ export default function Rooms({ photos, loading }) {
   return loading ? (
     <Spin />
   ) : (
-    <Row
-      justify="center"
-      align="middle"
-      gutter={[
-        { xs: 16, sm: 24, md: 32, lg: 40, xl: 40, xxl: 40 },
-        { xs: 16, sm: 24, md: 32, lg: 40, xl: 40, xxl: 40 },
-      ]}
-    >
+    <Row justify="center" align="middle" gutter={[16, 16]}>
       {metadata.map((photo, idx) => {
         let href = `/room/?name=${photo.tag}`;
         return (
-          <Col className="gutter-row" style={{ textAlign: "center" }} key={idx} span={8}>
+          <Col className="gutter-row" style={{ textAlign: "center" }} key={idx}>
             <Card>
               <Link href={href}>
                 <Space direction="vertical">
