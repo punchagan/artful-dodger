@@ -9,7 +9,7 @@ const findFirstMissing = (photos, metadata) => {
 };
 
 export const extraRooms = [
-  { title: "Entire Collection", tag: "all" },
+  { title: "Full Collection", tag: "all" },
   { title: "Sold", tag: "sold" },
 ];
 export default function Rooms({ photos, loading }) {
@@ -46,13 +46,18 @@ export default function Rooms({ photos, loading }) {
       {metadata.map((photo, idx) => {
         let href = `/room/?name=${photo.tag}`;
         return (
-          <Col className="gutter-row" style={{ textAlign: "center" }} key={idx}>
+          <Col
+            className="gutter-row"
+            style={{ textAlign: "center" }}
+            key={idx}
+            span={{ xs: 12, sm: 12, md: 12, lg: 8, xl: 8, xxl: 8 }}
+          >
             <Card>
               <Link href={href}>
                 <Space direction="vertical">
                   <Avatar
                     shape="square"
-                    size={{ xs: 128, sm: 128, md: 256, lg: 256, xl: 256, xxl: 256 }}
+                    size={{ xs: 96, sm: 128, md: 128, lg: 256, xl: 256, xxl: 256 }}
                     src={photo.thumbnail}
                   />
                   <Typography.Text>{photo.title}</Typography.Text>
