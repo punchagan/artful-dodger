@@ -26,8 +26,12 @@ export default function BaseLayout({ children, title = "This is the default titl
       </Head>
       <Layout>
         <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" selectedKeys={selectedKeys}>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            triggerSubMenuAction="click"
+            selectedKeys={selectedKeys}
+          >
             {paths.map((path, idx) => (
               <Menu.Item key={path.name}>
                 <Link href={path.name}>{path.title}</Link>
