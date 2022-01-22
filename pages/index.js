@@ -6,11 +6,7 @@ import { PageHeader } from "antd";
 export default function Home({ config }) {
   return (
     <BaseLayout>
-      <PageHeader
-        title="Welcome to The Artful Dodger"
-        subTitle="We consign, commission, buy and sell art"
-        backIcon={false}
-      />
+      <PageHeader title="The Artful Dodger" subTitle="We consign, commission, buy and sell art" />
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={config.imagePrefix} />
     </BaseLayout>
   );

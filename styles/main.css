@@ -8,3 +8,11 @@
 .gallery-figcaption--info .photo-caption {
   color: white;
 }
+
+.ant-page-header-heading {
+  justify-content: center !important;
+}
+
+.ant-page-header-heading-left {
+  flex-direction: column;
+}

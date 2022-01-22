@@ -8,7 +8,6 @@ export default function About() {
       <PageHeader
         title="About"
         subTitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-        backIcon={false}
       />
       <div className="container">
         <p>
