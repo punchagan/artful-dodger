@@ -40,7 +40,7 @@ export default function BaseLayout({ children, title = "This is the default titl
           </Menu>
         </Header>
         <Content style={{ minWidth: "60%" }}>{children}</Content>
-        <Footer></Footer>
+        <Footer style={{ textAlign: "center" }}>The Artful Dodger ©2022</Footer>
       </Layout>
     </>
   );
