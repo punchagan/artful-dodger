@@ -122,7 +122,6 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
     isZoomed ? setZoomPhotoIndex(prevIdx) : setActivePhotoIndex(prevIdx);
   };
   const showNext = () => {
-    console.log(nextIdx, zoomPhotoIndex);
     isZoomed ? setZoomPhotoIndex(nextIdx) : setActivePhotoIndex(nextIdx);
   };
 
