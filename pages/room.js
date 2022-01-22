@@ -4,7 +4,7 @@ import PhotoList from "../components/photo-list";
 import { extraRooms } from "../components/room-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
-import { PageHeader } from "antd";
+import { PageHeader, Breadcrumb } from "antd";
 
 export default function Room({ config }) {
   const router = useRouter();
@@ -24,9 +24,18 @@ export default function Room({ config }) {
       transform = (array) => array.filter(tagFilter(name));
   }
 
+  const breadcrumb = (
+    <Breadcrumb>
+      <Breadcrumb.Item>
+        <a href="/viewing-rooms">Viewing Rooms</a>
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>{title}</Breadcrumb.Item>
+    </Breadcrumb>
+  );
+
   return (
     <BaseLayout>
-      <PageHeader title={title} backIcon={false} />
+      <PageHeader title={title} breadcrumb={breadcrumb} />
       <PhotoList
         metadataUrl={config.metadataUrl}
         imagePrefix={config.imagePrefix}
