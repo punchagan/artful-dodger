@@ -13,7 +13,7 @@ download_images () {
     pushd "${DIR}"
 
     # Figure out missing files
-    for id in $(jq -r ".[].thumbnail"  /tmp/metadata.json);
+    for id in $(jq -r ".[].thumbnail"  /tmp/metadata.json | grep -v " ");
     do
         if [ ! -f "${id}" ]; then
             echo "${PREFIX}${id}" >> /tmp/input.txt
