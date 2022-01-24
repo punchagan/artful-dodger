@@ -74,7 +74,13 @@ export const usePhotos = (url, imagePrefix) => {
   return { loading, photos };
 };
 
-export default function PhotoList({ metadataUrl, transform, imagePrefix, openedArtwork }) {
+export default function PhotoList({
+  metadataUrl,
+  transform,
+  imagePrefix,
+  openedArtwork,
+  closeArtworkCallback,
+}) {
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const photos = transform ? transform(data) : data;
 
@@ -135,6 +141,9 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, openedA
     setZoomPhotoIndex(0);
     setIsZoomed(false);
     setIsOpen(false);
+    if (closeArtworkCallback) {
+      closeArtworkCallback();
+    }
   };
   const showPrev = () => {
     isZoomed ? setZoomPhotoIndex(prevIdx) : setActivePhotoIndex(prevIdx);

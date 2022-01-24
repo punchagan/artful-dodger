@@ -24,6 +24,12 @@ export default function Room({ config }) {
       transform = (array) => array.filter(tagFilter(name));
   }
 
+  const removeArtworkQueryParam = () => {
+    const { pathname, query: oldQuery } = router;
+    const { artwork, ...query } = oldQuery;
+    router.push({ pathname, query });
+  };
+
   const breadcrumb = (
     <Breadcrumb>
       <Breadcrumb.Item>
@@ -41,6 +47,7 @@ export default function Room({ config }) {
         imagePrefix={config.imagePrefix}
         transform={transform}
         openedArtwork={artwork}
+        closeArtworkCallback={removeArtworkQueryParam}
       />
     </BaseLayout>
   );
