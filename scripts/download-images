@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+
+import json
+import os
+
+import requests
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+ROOT = os.path.dirname(HERE)
+METADATA_FILE = "/tmp/metadata.json"
+THUMBNAIL_PREFIX = "https://drive.google.com/thumbnail?id="
+IMAGE_PREFIX = "https://drive.google.com/uc?export=view&id="
+
+
+def find_metadata_url():
+    path = os.path.join(ROOT, ".env.local")
+    with open(path) as f:
+        lines = [line.strip() for line in f if line.startswith("METADATA_URL")]
+    metadata_url = lines[-1].split("=", 1)[-1].strip()
+    return metadata_url
+
+
+def download_metadata():
+    if os.path.exists(METADATA_FILE):
+        return
+
+    metadata_url = find_metadata_url()
+    data = requests.get(metadata_url).json()
+    with open(METADATA_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def get_thumbnail_ids():
+    with open(METADATA_FILE) as f:
+        data = json.load(f)
+
+    thumbnails = set()
+    for each in data:
+        thumbnail = each["thumbnail"]
+        if " " in thumbnail or not thumbnail:
+            continue
+
+        thumbnails.add(thumbnail)
+
+        extra_thumbnails = each["extra_thumbnails"]
+        if not extra_thumbnails:
+            continue
+
+        for thumbnail in extra_thumbnails.split(";"):
+            thumbnails.add(thumbnail)
+
+    return thumbnails
+
+
+def download_in_chunks(ids, url_prefix, download_dir):
+    session = requests.Session()
+    for image in ids:
+        path = os.path.join(download_dir, image)
+        if os.path.exists(path):
+            continue
+        url = f"{url_prefix}{image}"
+        print(f"Downloading {url} ...")
+        with session.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+
+def download_thumbnails(ids):
+    download_dir = os.path.join(ROOT, "public", "thumbnail")
+    url_prefix = THUMBNAIL_PREFIX
+    download_in_chunks(ids, url_prefix, download_dir)
+
+
+def download_images(ids):
+    download_dir = os.path.join(ROOT, "public", "image")
+    url_prefix = IMAGE_PREFIX
+    download_in_chunks(ids, url_prefix, download_dir)
+
+
+if __name__ == "__main__":
+    download_metadata()
+    thumbnails = get_thumbnail_ids()
+    download_thumbnails(thumbnails)
+    download_images(thumbnails)
