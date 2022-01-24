@@ -1,18 +1,15 @@
 import BaseLayout from "../components/layout";
-import PhotoList from "../components/photo-list";
+import { usePhotos } from "../components/photo-list";
+import RoomList from "../components/room-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { PageHeader } from "antd";
 
-export default function Home({ config }) {
-  const excludeSold = (arr) => arr.filter((it) => !it.sold);
+export default function Rooms({ config }) {
+  const { loading, photos } = usePhotos(config.metadataUrl, config.imagePrefix);
   return (
     <BaseLayout>
-      <PageHeader title="The Artful Dodger" subTitle="We consign, commission, buy and sell art" />
-      <PhotoList
-        metadataUrl={config.metadataUrl}
-        imagePrefix={config.imagePrefix}
-        transform={excludeSold}
-      />
+      <PageHeader title="The Artful Dodger" />
+      <RoomList photos={photos} loading={loading} />
     </BaseLayout>
   );
 }

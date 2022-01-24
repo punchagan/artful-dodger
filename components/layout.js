@@ -8,8 +8,7 @@ const { Header, Content, Footer } = Layout;
 export default function BaseLayout({ children, title = "This is the default title" }) {
   const router = useRouter();
   const paths = [
-    { name: "/", title: "The Artful Dodger" },
-    { name: "/viewing-rooms", title: "Viewing Rooms", otherPath: "/room" },
+    { name: "/", title: "The Artful Dodger", otherPath: "/room" },
     { name: "/about", title: "About" },
   ];
   const selectedKeys = paths.reduce(

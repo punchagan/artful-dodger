@@ -33,7 +33,7 @@ export default function Room({ config }) {
   const breadcrumb = (
     <Breadcrumb>
       <Breadcrumb.Item>
-        <a href="/viewing-rooms">Viewing Rooms</a>
+        <a href="/">Home</a>
       </Breadcrumb.Item>
       <Breadcrumb.Item>{title}</Breadcrumb.Item>
     </Breadcrumb>
