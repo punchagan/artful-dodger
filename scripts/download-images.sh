@@ -21,7 +21,7 @@ download_images () {
     done
 
     # Download images
-    wget -c -i /tmp/input.txt
+    wget -c -i /tmp/input.txt || echo "Some images failed to download"
 
     # Rename files
     for file in $(ls);
@@ -41,6 +41,7 @@ download_images () {
 # Fetch JSON using env
 pushd $(dirname $0)/..
 source .env.local
+curl -L "${METADATA_URL}" | jq . > "/tmp/metadata.json"
 download_images "https://drive.google.com/thumbnail?id=" "${DOWNLOAD_DIR}/thumbnail/"
 download_images "https://drive.google.com/uc?export=view&id=" "${DOWNLOAD_DIR}/image/"
 popd
