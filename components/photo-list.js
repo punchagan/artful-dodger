@@ -24,10 +24,9 @@ const transformData = (p, number, imagePrefix) => {
   const price = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
   const title = `${p.title} by ${p.artist}`;
-  const captionTags = [p.medium, size];
-  if (p.sold || p.price) {
-    captionTags.push(price);
-  }
+  const code = `Artwork ID: ${p.artwork_code}`;
+  const captionTags_ = [p.medium, size, p.sold || p.price ? price : undefined, code];
+  const captionTags = captionTags_.filter((it) => it !== undefined);
   const caption = captionTags.map((ct, idx) => <Tag key={idx}>{ct}</Tag>);
   const tags = p.viewing_rooms
     ?.split(";")
