@@ -22,7 +22,10 @@ const transformData = (p, number, imagePrefix) => {
   const photo = photoUrl(p.thumbnail, imagePrefix);
   const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
   const title = `${p.title} by ${p.artist}`;
-  const captionTags = [`${p.medium}`, `${p.size}`, `${price}`];
+  const captionTags = [p.medium, p.size];
+  if (p.sold || p.price) {
+    captionTags.push(price);
+  }
   const caption = captionTags.map((ct, idx) => <Tag key={idx}>{ct}</Tag>);
   const tags = p.viewing_rooms
     ?.split(";")
