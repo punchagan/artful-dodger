@@ -18,7 +18,7 @@ const thumbnailUrl = (id, imagePrefix) =>
 const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
 
 const transformData = (p, number, imagePrefix) => {
-  const thumbnail = thumbnailUrl(p.thumbnail, imagePrefix);
+  const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
   const photo = photoUrl(p.thumbnail, imagePrefix);
   const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
   const title = `${p.title} by ${p.artist}`;
@@ -49,6 +49,10 @@ const transformData = (p, number, imagePrefix) => {
   };
 };
 
+const filterData = (it) => {
+  return Boolean(it?.thumbnail);
+};
+
 export const usePhotos = (url, imagePrefix) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +61,7 @@ export const usePhotos = (url, imagePrefix) => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const photos = data.map((d, idx) => transformData(d, idx, imagePrefix));
+        const photos = data.map((d, idx) => transformData(d, idx, imagePrefix)).filter(filterData);
         setPhotos(photos);
         setLoading(false);
       });
