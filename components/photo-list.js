@@ -86,16 +86,16 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
   const activePhoto = photos[activePhotoIndex];
   const extraPhotos = activePhoto?.extraPhotos;
   const extraThumbnails = activePhoto?.extraThumbnails;
-  const activeZoomPhoto = isZoomed ? extraPhotos[zoomPhotoIndex] : activePhoto?.photo;
-  const activeThumbnail = isZoomed ? extraThumbnails[zoomPhotoIndex] : activePhoto?.thumbnail;
+  const activeZoomPhoto = isZoomed ? extraPhotos?.[zoomPhotoIndex] : activePhoto?.photo;
+  const activeThumbnail = isZoomed ? extraThumbnails?.[zoomPhotoIndex] : activePhoto?.thumbnail;
 
   const n = isZoomed ? extraPhotos?.length : photos.length;
   const nextIdx = isZoomed ? (zoomPhotoIndex + n + 1) % n : (activePhotoIndex + n + 1) % n;
-  const nextPhoto = isZoomed ? extraPhotos[nextIdx] : photos[nextIdx]?.photo;
-  const nextThumbnail = isZoomed ? extraThumbnails[nextIdx] : photos[nextIdx]?.thumbnail;
+  const nextPhoto = isZoomed ? extraPhotos?.[nextIdx] : photos[nextIdx]?.photo;
+  const nextThumbnail = isZoomed ? extraThumbnails?.[nextIdx] : photos[nextIdx]?.thumbnail;
   const prevIdx = isZoomed ? (zoomPhotoIndex + n - 1) % n : (activePhotoIndex + n - 1) % n;
-  const prevPhoto = isZoomed ? extraPhotos[prevIdx] : photos[prevIdx]?.photo;
-  const prevThumbnail = isZoomed ? extraThumbnails[prevIdx] : photos[prevIdx]?.thumbnail;
+  const prevPhoto = isZoomed ? extraPhotos?.[prevIdx] : photos[prevIdx]?.photo;
+  const prevThumbnail = isZoomed ? extraThumbnails?.[prevIdx] : photos[prevIdx]?.thumbnail;
 
   const enableZoomButton = extraPhotos?.length > 1;
   const zoomButton = (
