@@ -30,18 +30,9 @@ export default function Room({ config }) {
     router.push({ pathname, query });
   };
 
-  const breadcrumb = (
-    <Breadcrumb>
-      <Breadcrumb.Item>
-        <a href="/">Home</a>
-      </Breadcrumb.Item>
-      <Breadcrumb.Item>{title}</Breadcrumb.Item>
-    </Breadcrumb>
-  );
-
   return (
     <BaseLayout>
-      <PageHeader title={title} breadcrumb={breadcrumb} />
+      <PageHeader title={title} />
       <PhotoList
         metadataUrl={config.metadataUrl}
         imagePrefix={config.imagePrefix}
