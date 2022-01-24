@@ -54,7 +54,7 @@ export default function Rooms({ photos, loading }) {
             key={idx}
             span={{ xs: 12, sm: 12, md: 12, lg: 8, xl: 8, xxl: 8 }}
           >
-            <Card>
+            <Card bordered={false} hoverable={false}>
               <Link href={href}>
                 <Space direction="vertical">
                   <Avatar
