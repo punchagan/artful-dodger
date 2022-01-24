@@ -50,7 +50,7 @@ const transformData = (p, number, imagePrefix) => {
 };
 
 const filterData = (it) => {
-  return Boolean(it?.thumbnail);
+  return Boolean(it?.thumbnail) && it?.hide_art !== "y";
 };
 
 export const usePhotos = (url, imagePrefix) => {
