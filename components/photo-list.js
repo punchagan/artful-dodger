@@ -130,8 +130,10 @@ export default function PhotoList({
       setIsZoomed(true);
       setIsOpen(true);
       setActivePhotoIndex(photos.findIndex((it) => it.artwork_code === openedArtwork));
+    } else {
+      setIsOpen(false);
     }
-  }, [photos, openedArtwork]);
+  }, [photos?.length, openedArtwork]);
 
   const openGalleryPhoto = (idx) => {
     setActivePhotoIndex(idx);
