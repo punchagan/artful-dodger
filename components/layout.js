@@ -24,13 +24,13 @@ export default function BaseLayout({ children, title = "This is the default titl
         <title>The Artful Dodger</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Header>
+      <Layout style={{ backgroundColor: "#ffffff" }}>
+        <Header style={{ backgroundColor: "#f0f2f5" }}>
           <Menu
-            theme="dark"
             mode="horizontal"
             triggerSubMenuAction="click"
             selectedKeys={selectedKeys}
+            style={{ backgroundColor: "#f0f2f5" }}
           >
             {paths.map((path, idx) => (
               <Menu.Item key={path.name}>
