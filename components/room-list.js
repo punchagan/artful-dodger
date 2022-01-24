@@ -1,7 +1,8 @@
 import Link from "next/link";
 import RoomList from "../components/room-list";
+import Loading from "../components/loading";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
-import { Image, Row, Col, Card, Avatar, Typography, Space, Spin } from "antd";
+import { Image, Row, Col, Card, Avatar, Typography, Space } from "antd";
 
 const findFirstMissing = (photos, metadata) => {
   const previousThumbnails = new Set(metadata.map((it) => it.thumbnail));
@@ -42,7 +43,7 @@ export default function Rooms({ photos, loading }) {
   });
 
   return loading ? (
-    <Spin />
+    <Loading />
   ) : (
     <Row justify="center" align="middle" gutter={[16, 16]}>
       {metadata.map((photo, idx) => {

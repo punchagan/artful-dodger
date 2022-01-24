@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Image, Spin, Tag, Button } from "antd";
+import { Image, Tag, Button } from "antd";
 import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
+import Loading from "./loading";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -153,7 +154,7 @@ export default function PhotoList({
   };
 
   return loading ? (
-    <Spin />
+    <Loading />
   ) : (
     <>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
