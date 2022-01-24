@@ -15,7 +15,7 @@ export default function Room({ config }) {
   let transform;
   switch (name) {
     case "all":
-      transform = (x) => x;
+      transform = undefined;
       break;
     case "sold":
       transform = (arr) => arr.filter((it) => it.sold === "y");
