@@ -187,6 +187,7 @@ export default function PhotoList({
           toolbarButtons={toolbarButtons}
           onMovePrevRequest={showPrev}
           onMoveNextRequest={showNext}
+          animationDisabled={true}
         />
       )}
     </>
