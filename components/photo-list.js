@@ -13,8 +13,7 @@ const columnsCountBreakPoints = {
 };
 
 const devEnv = process.env.NODE_ENV !== "production";
-const thumbnailUrl = (id, imagePrefix) =>
-  devEnv ? `/thumbnail/${id}` : `${imagePrefix}/thumbnail/${id}`;
+const thumbnailUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
 const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
 
 const transformData = (p, number, imagePrefix) => {
