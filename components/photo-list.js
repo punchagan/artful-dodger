@@ -21,8 +21,9 @@ const transformData = (p, number, imagePrefix) => {
   const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
   const photo = photoUrl(p.thumbnail, imagePrefix);
   const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
+  const size = `${p.height} x ${p.width} cm`;
   const title = `${p.title} by ${p.artist}`;
-  const captionTags = [p.medium, p.size];
+  const captionTags = [p.medium, size];
   if (p.sold || p.price) {
     captionTags.push(price);
   }
