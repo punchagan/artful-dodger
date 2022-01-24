@@ -21,9 +21,6 @@ def find_metadata_url():
 
 
 def download_metadata():
-    if os.path.exists(METADATA_FILE):
-        return
-
     metadata_url = find_metadata_url()
     data = requests.get(metadata_url).json()
     with open(METADATA_FILE, "w") as f:
