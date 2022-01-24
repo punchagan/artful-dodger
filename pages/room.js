@@ -8,7 +8,7 @@ import { PageHeader, Breadcrumb } from "antd";
 
 export default function Room({ config }) {
   const router = useRouter();
-  const { name } = router.query;
+  const { name, artwork } = router.query;
   let tagRoom = name ? extraRooms.find((it) => it.tag === name) : undefined;
   let title = tagRoom ? tagRoom.title : name ? tagToTitle(name) : "";
 
@@ -40,6 +40,7 @@ export default function Room({ config }) {
         metadataUrl={config.metadataUrl}
         imagePrefix={config.imagePrefix}
         transform={transform}
+        openedArtwork={artwork}
       />
     </BaseLayout>
   );

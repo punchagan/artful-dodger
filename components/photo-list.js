@@ -74,12 +74,14 @@ export const usePhotos = (url, imagePrefix) => {
   return { loading, photos };
 };
 
-export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
+export default function PhotoList({ metadataUrl, transform, imagePrefix, openedArtwork }) {
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const photos = transform ? transform(data) : data;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [activePhotoIndex, setActivePhotoIndex] = useState(
+    openedArtwork ? photos?.findIndex((it) => it.artwork_code === openedArtwork) : 0
+  );
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPhotoIndex, setZoomPhotoIndex] = useState(0);
 
@@ -114,7 +116,15 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
 
   const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
   const count = <Tag>{`${countIdx} of ${n}`}</Tag>;
-  const toolbarButtons = [count, zoomButton];
+  const toolbarButtons = openedArtwork ? [count] : [count, zoomButton];
+
+  useEffect(() => {
+    if (openedArtwork) {
+      setIsZoomed(true);
+      setIsOpen(true);
+      setActivePhotoIndex(photos.findIndex((it) => it.artwork_code === openedArtwork));
+    }
+  }, [photos, openedArtwork]);
 
   const openGalleryPhoto = (idx) => {
     setActivePhotoIndex(idx);
@@ -161,8 +171,8 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix }) {
           mainSrcThumbnail={activeThumbnail}
           nextSrcThumbnail={nextThumbnail}
           prevSrcThumbnail={prevThumbnail}
-          imageTitle={activePhoto.title}
-          imageCaption={activePhoto.caption}
+          imageTitle={activePhoto?.title}
+          imageCaption={activePhoto?.caption}
           enableZoom={false}
           imagePadding={50}
           toolbarButtons={toolbarButtons}
