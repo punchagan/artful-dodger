@@ -25,7 +25,7 @@ const transformData = (p, number, imagePrefix) => {
   const captionTags = [`${p.medium}`, `${p.size}`, `${price}`];
   const caption = captionTags.map((ct, idx) => <Tag key={idx}>{ct}</Tag>);
   const tags = p.viewing_rooms
-    .split(";")
+    ?.split(";")
     .map((x) => x.trim())
     .filter((it) => it !== "");
   const extraThumbnailIDs = [p.thumbnail].concat(
