@@ -20,7 +20,8 @@ const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}
 const transformData = (p, number, imagePrefix) => {
   const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
   const photo = photoUrl(p.thumbnail, imagePrefix);
-  const price = p.sold === "y" ? `Sold` : `₹ ${p.price}`;
+  const sold = p.sold?.trim().toLowerCase() === "y";
+  const price = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
   const title = `${p.title} by ${p.artist}`;
   const captionTags = [p.medium, size];
@@ -43,6 +44,7 @@ const transformData = (p, number, imagePrefix) => {
   return {
     ...p,
     title,
+    sold,
     tags,
     photo,
     thumbnail,

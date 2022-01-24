@@ -18,7 +18,7 @@ export default function Room({ config }) {
       transform = undefined;
       break;
     case "sold":
-      transform = (arr) => arr.filter((it) => it.sold === "y");
+      transform = (arr) => arr.filter((it) => it.sold);
       break;
     default:
       transform = (array) => array.filter(tagFilter(name));

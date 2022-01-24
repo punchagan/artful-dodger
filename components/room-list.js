@@ -29,7 +29,7 @@ export default function Rooms({ photos, loading }) {
 
       case "sold":
         meta = findFirstMissing(
-          photos.filter((p) => p.sold === "y"),
+          photos.filter((p) => p.sold),
           metadata
         );
         break;
