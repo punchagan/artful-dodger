@@ -10,20 +10,20 @@ const findFirstUnused = (photos, metadata) => {
 };
 
 export const extraRooms = [
-  { title: "Full Collection", tag: "all" },
-  { title: "Sold", tag: "sold" },
+  { title: "Full Collection", id: "all" },
+  { title: "Sold", id: "sold" },
 ];
 export default function Rooms({ photos, loading }) {
   const tags = Array.from(new Set(photos.map((x) => x.tags).flat()))
     .filter((it) => Boolean(it))
     .sort();
-  const tagRooms = tags.map((tag) => ({ title: tagToTitle(tag), tag }));
+  const tagRooms = tags.map((tag) => ({ title: tagToTitle(tag), id: tag }));
   const rooms = tagRooms.concat(extraRooms);
   const metadata = [];
 
   let meta;
   rooms.forEach((room, idx) => {
-    switch (room.tag) {
+    switch (room.id) {
       case "all":
         meta = findFirstUnused(photos, metadata);
         break;
@@ -36,18 +36,18 @@ export default function Rooms({ photos, loading }) {
         break;
 
       default:
-        meta = findFirstUnused(photos.filter(tagFilter(room.tag)), metadata);
+        meta = findFirstUnused(photos.filter(tagFilter(room.id)), metadata);
         break;
     }
-    metadata.push({ ...meta, title: room.title, tag: room.tag });
+    metadata.push({ ...meta, title: room.title, id: room.id });
   });
 
   return loading ? (
     <Loading />
   ) : (
     <Row justify="center" align="middle" gutter={[16, 16]}>
-      {metadata.map((photo, idx) => {
-        let href = `/room/?name=${photo.tag}`;
+      {metadata.map((room, idx) => {
+        let href = `/room/?name=${room.id}`;
         return (
           <Col
             className="gutter-row"
@@ -62,9 +62,9 @@ export default function Rooms({ photos, loading }) {
                     style={{ cursor: "pointer" }}
                     shape="square"
                     size={{ xs: 96, sm: 128, md: 128, lg: 256, xl: 256, xxl: 256 }}
-                    src={photo.thumbnail}
+                    src={room.thumbnail}
                   />
-                  <Typography.Text style={{ cursor: "pointer" }}>{photo.title}</Typography.Text>
+                  <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
                 </Space>
               </Link>
             </Card>

@@ -9,7 +9,7 @@ import { PageHeader, Breadcrumb } from "antd";
 export default function Room({ config }) {
   const router = useRouter();
   const { name, artwork } = router.query;
-  let tagRoom = name ? extraRooms.find((it) => it.tag === name) : undefined;
+  let tagRoom = name ? extraRooms.find((it) => it.id === name) : undefined;
   let title = tagRoom ? tagRoom.title : name ? tagToTitle(name) : "";
 
   let transform;
