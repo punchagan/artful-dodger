@@ -4,7 +4,7 @@ import Loading from "../components/loading";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
 import { Image, Row, Col, Card, Avatar, Typography, Space } from "antd";
 
-const findFirstMissing = (photos, metadata) => {
+const findFirstUnused = (photos, metadata) => {
   const previousThumbnails = new Set(metadata.map((it) => it.thumbnail));
   return photos.find((it) => !previousThumbnails.has(it.thumbnail));
 };
@@ -25,18 +25,18 @@ export default function Rooms({ photos, loading }) {
   rooms.forEach((room, idx) => {
     switch (room.tag) {
       case "all":
-        meta = findFirstMissing(photos, metadata);
+        meta = findFirstUnused(photos, metadata);
         break;
 
       case "sold":
-        meta = findFirstMissing(
+        meta = findFirstUnused(
           photos.filter((p) => p.sold),
           metadata
         );
         break;
 
       default:
-        meta = findFirstMissing(photos.filter(tagFilter(room.tag)), metadata);
+        meta = findFirstUnused(photos.filter(tagFilter(room.tag)), metadata);
         break;
     }
     metadata.push({ ...meta, title: room.title, tag: room.tag });
