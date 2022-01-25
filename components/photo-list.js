@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Image, Tag, Button } from "antd";
 import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import Loading from "./loading";
+import { tagToTitle } from "../lib/tag-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -23,7 +24,7 @@ const transformData = (p, number, imagePrefix) => {
   const sold = p.sold?.trim().toLowerCase() === "y";
   const price = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
-  const title = `${p.title} by ${p.artist}`;
+  const title = `${tagToTitle(p.title)} by ${tagToTitle(p.artist)}`;
   const code = `Artwork ID: ${p.artwork_code}`;
   const captionTags_ = [p.medium, size, p.sold || p.price ? price : undefined, code];
   const captionTags = captionTags_.filter((it) => it !== undefined);
