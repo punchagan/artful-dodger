@@ -85,6 +85,9 @@ export default function PhotoList({
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const photos = transform ? transform(data) : data;
 
+  const pageSize = 15;
+  const [showCount, setShowCount] = useState(pageSize);
+
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(
     openedArtwork ? photos?.findIndex((it) => it.artwork_code === openedArtwork) : 0
@@ -119,6 +122,20 @@ export default function PhotoList({
         setZoomPhotoIndex(0);
       }}
     />
+  );
+
+  const photoCount = photos.length;
+  const loadMore = (
+    <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
+      <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
+      <Button
+        size="small"
+        disabled={photoCount <= showCount}
+        onClick={() => setShowCount(showCount + pageSize)}
+      >
+        Load more
+      </Button>
+    </div>
   );
 
   const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
@@ -161,7 +178,7 @@ export default function PhotoList({
     <>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
         <Masonry gutter={16}>
-          {photos.map((photo, idx) => (
+          {photos.slice(0, showCount - 1).map((photo, idx) => (
             <Image
               onClick={() => openGalleryPhoto(idx)}
               key={idx}
@@ -174,6 +191,7 @@ export default function PhotoList({
           ))}
         </Masonry>
       </ResponsiveMasonry>
+      {loadMore}
       {isOpen && (
         <Lightbox
           onCloseRequest={onClose}
