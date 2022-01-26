@@ -21,9 +21,10 @@ def find_metadata_url():
     return metadata_url
 
 
-def download_metadata(download_dir):
+def download_metadata(download_dir, metadata_url=None):
     metadata_file = os.path.join(download_dir, METADATA_NAME)
-    metadata_url = find_metadata_url()
+    if metadata_url is None:
+        metadata_url = find_metadata_url()
     data = requests.get(metadata_url).json()
     with open(metadata_file, "w") as f:
         json.dump(data, f, indent=2)
@@ -88,9 +89,10 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--download-dir", default=PUBLIC)
+    parser.add_argument("-u", "--metadata-url", default=None)
 
     args = parser.parse_args()
-    metadata_file = download_metadata(args.download_dir)
+    metadata_file = download_metadata(args.download_dir, args.metadata_url)
     thumbnails = get_thumbnail_ids(metadata_file)
     download_thumbnails(thumbnails, args.download_dir)
     download_images(thumbnails, args.download_dir)
