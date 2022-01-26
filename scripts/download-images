@@ -8,7 +8,7 @@ import requests
 HERE = os.path.abspath(os.path.dirname(__file__))
 ROOT = os.path.dirname(HERE)
 PUBLIC = os.path.join(ROOT, "public")
-METADATA_FILE = os.path.join(PUBLIC, "metadata.json")
+METADATA_NAME = "metadata.json"
 THUMBNAIL_PREFIX = "https://drive.google.com/thumbnail?id="
 IMAGE_PREFIX = "https://drive.google.com/uc?export=view&id="
 
@@ -21,15 +21,17 @@ def find_metadata_url():
     return metadata_url
 
 
-def download_metadata():
+def download_metadata(download_dir):
+    metadata_file = os.path.join(download_dir, METADATA_NAME)
     metadata_url = find_metadata_url()
     data = requests.get(metadata_url).json()
-    with open(METADATA_FILE, "w") as f:
+    with open(metadata_file, "w") as f:
         json.dump(data, f, indent=2)
+    return metadata_file
 
 
-def get_thumbnail_ids():
-    with open(METADATA_FILE) as f:
+def get_thumbnail_ids(metadata_file):
+    with open(metadata_file) as f:
         data = json.load(f)
 
     thumbnails = set()
@@ -67,20 +69,28 @@ def download_in_chunks(ids, url_prefix, download_dir):
                     f.write(chunk)
 
 
-def download_thumbnails(ids):
-    download_dir = os.path.join(PUBLIC, "thumbnail")
+def download_thumbnails(ids, parent_dir):
+    download_dir = os.path.join(parent_dir, "thumbnail")
+    os.makedirs(download_dir, exist_ok=True)
     url_prefix = THUMBNAIL_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
 
-def download_images(ids):
-    download_dir = os.path.join(PUBLIC, "image")
+def download_images(ids, parent_dir):
+    download_dir = os.path.join(parent_dir, "image")
+    os.makedirs(download_dir, exist_ok=True)
     url_prefix = IMAGE_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
 
 if __name__ == "__main__":
-    download_metadata()
-    thumbnails = get_thumbnail_ids()
-    download_thumbnails(thumbnails)
-    download_images(thumbnails)
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--download-dir", default=PUBLIC)
+
+    args = parser.parse_args()
+    metadata_file = download_metadata(args.download_dir)
+    thumbnails = get_thumbnail_ids(metadata_file)
+    download_thumbnails(thumbnails, args.download_dir)
+    download_images(thumbnails, args.download_dir)
