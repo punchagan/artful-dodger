@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import csv
+import io
 import json
 import os
 
@@ -16,7 +18,7 @@ IMAGE_PREFIX = "https://drive.google.com/uc?export=view&id="
 def find_metadata_url():
     path = os.path.join(ROOT, ".env.local")
     with open(path) as f:
-        lines = [line.strip() for line in f if line.startswith("METADATA_URL")]
+        lines = [line.strip() for line in f if line.startswith("METADATA_CSV")]
     metadata_url = lines[-1].split("=", 1)[-1].strip()
     return metadata_url
 
@@ -25,9 +27,13 @@ def download_metadata(download_dir, metadata_url=None):
     metadata_file = os.path.join(download_dir, METADATA_NAME)
     if metadata_url is None:
         metadata_url = find_metadata_url()
-    data = requests.get(metadata_url).json()
+
+    f = io.StringIO(requests.get(metadata_url).text)
+    data = [{key: val.strip() for key, val in row.items()} for row in csv.DictReader(f)]
+
     with open(metadata_file, "w") as f:
         json.dump(data, f, indent=2)
+
     return metadata_file
 
 
