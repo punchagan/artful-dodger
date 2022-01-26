@@ -7,7 +7,8 @@ import requests
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ROOT = os.path.dirname(HERE)
-METADATA_FILE = "/tmp/metadata.json"
+PUBLIC = os.path.join(ROOT, "public")
+METADATA_FILE = os.path.join(PUBLIC, "metadata.json")
 THUMBNAIL_PREFIX = "https://drive.google.com/thumbnail?id="
 IMAGE_PREFIX = "https://drive.google.com/uc?export=view&id="
 
@@ -67,13 +68,13 @@ def download_in_chunks(ids, url_prefix, download_dir):
 
 
 def download_thumbnails(ids):
-    download_dir = os.path.join(ROOT, "public", "thumbnail")
+    download_dir = os.path.join(PUBLIC, "thumbnail")
     url_prefix = THUMBNAIL_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
 
 def download_images(ids):
-    download_dir = os.path.join(ROOT, "public", "image")
+    download_dir = os.path.join(PUBLIC, "image")
     url_prefix = IMAGE_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
