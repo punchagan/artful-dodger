@@ -1,6 +1,6 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
-import { PageHeader } from "antd";
+import { PageHeader, Descriptions } from "antd";
 
 export default function About() {
   return (
@@ -26,7 +26,10 @@ export default function About() {
         sometimes by accident, sometimes on purpose (injected humour and the like).
       </p>
 
-      <p>Contact us at 999999999 theartfuldodger@gmail.com</p>
+      <Descriptions title="Contact Us" column={1}>
+        <Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
+        <Descriptions.Item label="Email">theartfuldodger@gmail.com</Descriptions.Item>
+      </Descriptions>
     </BaseLayout>
   );
 }
