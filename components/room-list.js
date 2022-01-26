@@ -18,7 +18,7 @@ export default function Rooms({ photos, loading }) {
     .filter((it) => Boolean(it))
     .sort();
   const tagRooms = tags.map((tag) => ({ title: tagToTitle(tag), id: tag }));
-  const rooms = tagRooms.concat(extraRooms);
+  const rooms = extraRooms.slice(0, 1).concat(tagRooms).concat(extraRooms.slice(1));
   const metadata = [];
 
   let meta;
