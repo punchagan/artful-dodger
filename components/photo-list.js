@@ -178,7 +178,7 @@ export default function PhotoList({
   ) : (
     <>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
-        <Masonry gutter={16}>
+        <Masonry gutter={48}>
           {photos.slice(0, showCount - 1).map((photo, idx) => (
             <Image
               onClick={() => openGalleryPhoto(idx)}
