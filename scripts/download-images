@@ -61,6 +61,7 @@ def get_thumbnail_ids(metadata_file):
 
 def download_in_chunks(ids, url_prefix, download_dir):
     session = requests.Session()
+    os.makedirs(download_dir, exist_ok=True)
     for image in ids:
         path = os.path.join(download_dir, image)
         if os.path.exists(path):
@@ -78,14 +79,12 @@ def download_in_chunks(ids, url_prefix, download_dir):
 
 def download_thumbnails(ids, parent_dir):
     download_dir = os.path.join(parent_dir, "thumbnail")
-    os.makedirs(download_dir, exist_ok=True)
     url_prefix = THUMBNAIL_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
 
 def download_images(ids, parent_dir):
     download_dir = os.path.join(parent_dir, "image")
-    os.makedirs(download_dir, exist_ok=True)
     url_prefix = IMAGE_PREFIX
     download_in_chunks(ids, url_prefix, download_dir)
 
