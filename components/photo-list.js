@@ -82,9 +82,17 @@ export default function PhotoList({
   imagePrefix,
   openedArtwork,
   closeArtworkCallback,
+  random = true,
 }) {
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
-  const photos = transform ? transform(data) : data;
+  const [photos, setPhotos] = useState([]);
+  useEffect(() => {
+    let p = transform ? transform(data) : data;
+    if (random) {
+      p = p.sort(() => Math.random() - 0.5);
+    }
+    setPhotos(p);
+  }, [data.length, random]);
 
   const pageSize = 15;
   const [showCount, setShowCount] = useState(pageSize);
