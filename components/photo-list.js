@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button } from "antd";
-import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
+import { Image, Tag, Button, Switch } from "antd";
 import Loading from "./loading";
 import { tagToTitle } from "../lib/tag-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
@@ -202,16 +201,19 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
         }}
       >
         <span>{`${countIdx} of ${n}`}</span>
-        <span
+        <Switch
+          checkedChildren="Detailed"
+          unCheckedChildren="Gallery"
           style={{ cursor: "pointer" }}
           type="primary"
+          disabled={!enableZoomButton}
+          checked={isZoomed}
           onClick={() => {
             setIsZoomed(!isZoomed);
             setZoomPhotoIndex(!isZoomed ? 1 : 0);
           }}
-        >
-          {enableZoomButton ? (isZoomed ? "Gallery View" : "Detailed View") : ""}
-        </span>
+          defaultChecked={false}
+        />
       </div>
     </div>
   );
