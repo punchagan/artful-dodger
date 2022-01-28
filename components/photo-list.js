@@ -199,7 +199,7 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
     <>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
         <Masonry gutter={48}>
-          {photos.slice(0, showCount - 1).map((photo, idx) => (
+          {photos.slice(0, showCount).map((photo, idx) => (
             <Image
               onClick={() => openGalleryPhoto(idx)}
               key={idx}
