@@ -16,19 +16,23 @@ export default function BaseLayout({ children, title = "This is the default titl
     []
   );
 
+  const backgroundColor = "#ffffff";
+  const borderBottom = "solid 1px #d0d0d0";
+  const borderTop = borderBottom;
+
   return (
     <>
       <Head>
         <title>The Artful Dodger</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout style={{ backgroundColor: "#ffffff" }}>
-        <Header style={{ backgroundColor: "#f0f2f5" }}>
+      <Layout style={{ backgroundColor }}>
+        <Header style={{ backgroundColor, borderBottom }}>
           <Menu
             mode="horizontal"
             triggerSubMenuAction="click"
             selectedKeys={selectedKeys}
-            style={{ backgroundColor: "#f0f2f5" }}
+            style={{ backgroundColor, borderBottom }}
           >
             {paths.map((path, idx) => (
               <Menu.Item key={path.name}>
@@ -38,7 +42,15 @@ export default function BaseLayout({ children, title = "This is the default titl
           </Menu>
         </Header>
         <Content style={{ minWidth: "100%" }}>{children}</Content>
-        <Footer style={{ textAlign: "center" }}>The Artful Dodger ©2022</Footer>
+        <Footer
+          style={{
+            textAlign: "center",
+            backgroundColor,
+            borderTop,
+          }}
+        >
+          The Artful Dodger ©2022
+        </Footer>
       </Layout>
     </>
   );
