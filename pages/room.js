@@ -8,7 +8,7 @@ import { PageHeader, Breadcrumb } from "antd";
 
 export default function Room({ config }) {
   const router = useRouter();
-  const { name, artwork } = router.query;
+  const { name } = router.query;
   let tagRoom = name ? extraRooms.find((it) => it.id === name) : undefined;
   let title = tagRoom ? tagRoom.title : name ? tagToTitle(name) : "";
 
@@ -24,12 +24,6 @@ export default function Room({ config }) {
       transform = (array) => array.filter(tagFilter(name));
   }
 
-  const removeArtworkQueryParam = () => {
-    const { pathname, query: oldQuery } = router;
-    const { artwork, ...query } = oldQuery;
-    router.push({ pathname, query });
-  };
-
   return (
     <BaseLayout>
       <PageHeader title={title} />
@@ -37,8 +31,6 @@ export default function Room({ config }) {
         metadataUrl={config.metadataUrl}
         imagePrefix={config.imagePrefix}
         transform={transform}
-        openedArtwork={artwork}
-        closeArtworkCallback={removeArtworkQueryParam}
       />
     </BaseLayout>
   );

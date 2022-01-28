@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Image, Tag, Button } from "antd";
 import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import Loading from "./loading";
@@ -17,6 +18,18 @@ const columnsCountBreakPoints = {
 const devEnv = process.env.NODE_ENV !== "production";
 const thumbnailUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
 const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
+
+const removeArtworkQueryParam = (router) => {
+  const { pathname, query: oldQuery } = router;
+  const { artwork, ...query } = oldQuery;
+  router.push({ pathname, query });
+};
+
+const setArtworkQueryParam = (router, artwork) => {
+  const { pathname, query } = router;
+  const { artwork: oldArtwork, ...otherParams } = query;
+  router.push({ pathname, query: { artwork, ...otherParams } });
+};
 
 const transformData = (p, number, imagePrefix) => {
   const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
@@ -76,14 +89,7 @@ export const usePhotos = (url, imagePrefix) => {
   return { loading, photos };
 };
 
-export default function PhotoList({
-  metadataUrl,
-  transform,
-  imagePrefix,
-  openedArtwork,
-  closeArtworkCallback,
-  random = true,
-}) {
+export default function PhotoList({ metadataUrl, transform, imagePrefix, random = true }) {
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const [photos, setPhotos] = useState([]);
   useEffect(() => {
@@ -98,9 +104,8 @@ export default function PhotoList({
   const [showCount, setShowCount] = useState(pageSize);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [activePhotoIndex, setActivePhotoIndex] = useState(
-    openedArtwork ? photos?.findIndex((it) => it.artwork_code === openedArtwork) : 0
-  );
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPhotoIndex, setZoomPhotoIndex] = useState(0);
 
@@ -149,11 +154,13 @@ export default function PhotoList({
 
   const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
   const count = <Tag>{`${countIdx} of ${n}`}</Tag>;
-  const toolbarButtons = openedArtwork ? [count] : [count, zoomButton];
+  const toolbarButtons = [count, zoomButton];
+
+  const router = useRouter();
+  const { artwork: openedArtwork } = router.query;
 
   useEffect(() => {
     if (openedArtwork) {
-      setIsZoomed(true);
       setIsOpen(true);
       setActivePhotoIndex(photos.findIndex((it) => it.artwork_code === openedArtwork));
     } else {
@@ -164,21 +171,26 @@ export default function PhotoList({
   const openGalleryPhoto = (idx) => {
     setActivePhotoIndex(idx);
     setIsOpen(true);
+    setArtworkQueryParam(router, photos[idx].artwork_code);
   };
   const onClose = () => {
     setActivePhotoIndex(0);
     setZoomPhotoIndex(0);
     setIsZoomed(false);
     setIsOpen(false);
-    if (closeArtworkCallback) {
-      closeArtworkCallback();
-    }
+    removeArtworkQueryParam(router);
   };
   const showPrev = () => {
     isZoomed ? setZoomPhotoIndex(prevIdx) : setActivePhotoIndex(prevIdx);
+    if (!isZoomed) {
+      setArtworkQueryParam(router, photos[prevIdx].artwork_code);
+    }
   };
   const showNext = () => {
     isZoomed ? setZoomPhotoIndex(nextIdx) : setActivePhotoIndex(nextIdx);
+    if (!isZoomed) {
+      setArtworkQueryParam(router, photos[nextIdx].artwork_code);
+    }
   };
 
   return loading ? (
