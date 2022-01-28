@@ -38,10 +38,6 @@ const transformData = (p, number, imagePrefix) => {
   const price = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
   const title = `${tagToTitle(p.title)} by ${tagToTitle(p.artist)}`;
-  const code = `Artwork ID: ${p.artwork_code}`;
-  const captionTags_ = [p.medium, size, p.sold || p.price ? price : undefined, code];
-  const captionTags = captionTags_.filter((it) => it !== undefined);
-  const caption = captionTags.map((ct, idx) => <Tag key={idx}>{ct}</Tag>);
   const tags = p.viewing_rooms
     ?.split(";")
     .map((x) => x.trim())
@@ -58,13 +54,14 @@ const transformData = (p, number, imagePrefix) => {
     ...p,
     title,
     sold,
+    price,
+    size,
     tags,
     photo,
     thumbnail,
     extraThumbnails,
     extraPhotos,
     number,
-    caption,
   };
 };
 
@@ -124,20 +121,6 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
   const prevThumbnail = isZoomed ? extraThumbnails?.[prevIdx] : photos[prevIdx]?.thumbnail;
 
   const enableZoomButton = extraPhotos?.length > 1;
-  const zoomButton = (
-    <Button
-      ghost
-      size="small"
-      icon={isZoomed ? <ZoomOutOutlined /> : <ZoomInOutlined />}
-      disabled={!enableZoomButton}
-      type="primary"
-      onClick={() => {
-        setIsZoomed(!isZoomed);
-        setZoomPhotoIndex(0);
-      }}
-    />
-  );
-
   const photoCount = photos.length;
   const loadMore = (
     <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
@@ -153,8 +136,6 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
   );
 
   const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
-  const count = <Tag>{`${countIdx} of ${n}`}</Tag>;
-  const toolbarButtons = [count, zoomButton];
 
   const router = useRouter();
   const { artwork: openedArtwork } = router.query;
@@ -193,6 +174,48 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
     }
   };
 
+  const caption = (photo) => (
+    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+        }}
+      >
+        <span>{photo?.title}</span>
+        <span style={{ color: "#fffff", opacity: "0.6", fontSize: "0.9em" }}>
+          {[photo?.medium, photo?.size, photo?.price].join(", ")}
+        </span>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          color: "#fffff",
+          opacity: "0.6",
+          fontSize: "0.9em",
+          justifyContent: "space-between",
+          textAlign: "right",
+        }}
+      >
+        <span>{`${countIdx} of ${n}`}</span>
+        <span
+          style={{ cursor: "pointer" }}
+          type="primary"
+          onClick={() => {
+            setIsZoomed(!isZoomed);
+            setZoomPhotoIndex(!isZoomed ? 1 : 0);
+          }}
+        >
+          {enableZoomButton ? (isZoomed ? "Gallery View" : "Detailed View") : ""}
+        </span>
+      </div>
+    </div>
+  );
+
   return loading ? (
     <Loading />
   ) : (
@@ -222,11 +245,9 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
           mainSrcThumbnail={activeThumbnail}
           nextSrcThumbnail={nextThumbnail}
           prevSrcThumbnail={prevThumbnail}
-          imageTitle={activePhoto?.title}
-          imageCaption={activePhoto?.caption}
+          imageCaption={caption(activePhoto)}
           enableZoom={false}
-          imagePadding={50}
-          toolbarButtons={toolbarButtons}
+          imagePadding={75}
           onMovePrevRequest={showPrev}
           onMoveNextRequest={showNext}
           animationDisabled={true}

@@ -17,8 +17,12 @@
   flex-direction: column;
 }
 
+.ril__caption,
+.ril__toolbar {
+  background: none !important;
+}
 .ril__caption {
-  justify-content: center !important;
+  display: block !important;
 }
 
 .ant-menu-item-selected a,
