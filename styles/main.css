@@ -20,3 +20,15 @@
 .ril__caption {
   justify-content: center !important;
 }
+
+.ant-menu-item-selected a,
+.ant-menu-item a:hover {
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: bold;
+}
+
+.ant-menu-item-selected::after,
+.ant-menu-item::after,
+.ant-menu-item:hover::after {
+  border-bottom: none !important;
+}
