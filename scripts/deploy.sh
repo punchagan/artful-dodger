@@ -10,7 +10,7 @@ rm -rf "${EXPORT_DIR}/"
 rm -rf next.config.js
 
 # Build the site
-cp .env.local.artful-dodger.muse-amuse.in .env.local
+cp production/.env.local.artful-dodger.muse-amuse.in .env.local
 yarn build
 yarn export
 

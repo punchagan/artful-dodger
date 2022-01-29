@@ -31,3 +31,4 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 /public/metadata.json
+/production/
