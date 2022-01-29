@@ -3,8 +3,13 @@ set -euo pipefail
 
 EXPORT_DIR="out"
 
-# Build the site
 pushd $(dirname $0)/..
+
+# Remove old build
+rm -rf "${EXPORT_DIR}/"
+
+# Build the site
+cp .env.local.artful-dodger.muse-amuse.in .env.local
 yarn build
 yarn export
 
