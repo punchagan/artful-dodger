@@ -28,8 +28,8 @@ export default function About({ config }) {
       </p>
 
       <Descriptions title="Contact Us" column={1}>
-        <Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
-        <Descriptions.Item label="Email">theartfuldodger@gmail.com</Descriptions.Item>
+        <Descriptions.Item label="Telephone">{config.phone}</Descriptions.Item>
+        <Descriptions.Item label="Email">{config.email}</Descriptions.Item>
       </Descriptions>
     </BaseLayout>
   );
