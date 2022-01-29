@@ -7,6 +7,7 @@ pushd $(dirname $0)/..
 
 # Remove old build
 rm -rf "${EXPORT_DIR}/"
+rm -rf next.config.js
 
 # Build the site
 cp .env.local.artful-dodger.muse-amuse.in .env.local
