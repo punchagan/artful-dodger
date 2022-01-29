@@ -25,7 +25,7 @@ export default function Room({ config }) {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
       <PageHeader title={title} />
       <PhotoList
         metadataUrl={config.metadataUrl}

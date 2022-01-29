@@ -5,10 +5,10 @@ import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
 const { Header, Content, Footer } = Layout;
 
-export default function BaseLayout({ children, title = "This is the default title" }) {
+export default function BaseLayout({ children, siteTitle, pageTitle }) {
   const router = useRouter();
   const paths = [
-    { name: "/", title: "The Artful Dodger" },
+    { name: "/", title: siteTitle },
     { name: "/about", title: "About" },
   ];
   const selectedKeys = paths.reduce(
@@ -23,7 +23,7 @@ export default function BaseLayout({ children, title = "This is the default titl
   return (
     <>
       <Head>
-        <title>The Artful Dodger</title>
+        <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout style={{ backgroundColor }}>
@@ -49,7 +49,7 @@ export default function BaseLayout({ children, title = "This is the default titl
             borderTop,
           }}
         >
-          The Artful Dodger ©2022
+          {siteTitle} ©2022
         </Footer>
       </Layout>
     </>

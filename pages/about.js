@@ -1,10 +1,11 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
 import { PageHeader, Descriptions } from "antd";
+import { pageStaticProps } from "../lib/page-utils";
 
-export default function About() {
+export default function About({ config }) {
   return (
-    <BaseLayout>
+    <BaseLayout pageTitle={`About — ${config.title}`} siteTitle={config.title}>
       <PageHeader title="About" subTitle="Lorem ipsum dolor sit amet" />
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
@@ -33,3 +34,5 @@ export default function About() {
     </BaseLayout>
   );
 }
+
+export const getStaticProps = pageStaticProps;

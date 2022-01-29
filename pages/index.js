@@ -7,8 +7,8 @@ import { PageHeader } from "antd";
 export default function Rooms({ config }) {
   const { loading, photos } = usePhotos(config.metadataUrl, config.imagePrefix);
   return (
-    <BaseLayout>
-      <PageHeader title="The Artful Dodger" />
+    <BaseLayout siteTitle={config.title} pageTitle={config.title}>
+      <PageHeader title={config.title} />
       <RoomList photos={photos} loading={loading} />
     </BaseLayout>
   );
