@@ -42,9 +42,9 @@ const transformData = (p, number, imagePrefix) => {
     .filter((it) => it !== "");
   const extraThumbnailIDs = [p.thumbnail].concat(
     p.extra_thumbnails
-      .split(";")
-      .map((x) => x.trim())
-      .filter((it) => it !== "")
+      ?.split(";")
+      ?.map((x) => x.trim())
+      ?.filter((it) => it !== "")
   );
   const extraThumbnails = extraThumbnailIDs.map((id) => thumbnailUrl(id, imagePrefix));
   const extraPhotos = extraThumbnailIDs.map((id) => photoUrl(id, imagePrefix));
