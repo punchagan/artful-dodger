@@ -201,19 +201,23 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
         }}
       >
         <span>{`${countIdx} of ${n}`}</span>
-        <Switch
-          checkedChildren="Detailed"
-          unCheckedChildren="Gallery"
-          style={{ cursor: "pointer" }}
-          type="primary"
-          disabled={!enableZoomButton}
-          checked={isZoomed}
-          onClick={() => {
-            setIsZoomed(!isZoomed);
-            setZoomPhotoIndex(!isZoomed ? 1 : 0);
-          }}
-          defaultChecked={false}
-        />
+        {enableZoomButton ? (
+          <Switch
+            checkedChildren="Detailed"
+            unCheckedChildren="Gallery"
+            style={{ cursor: "pointer" }}
+            type="primary"
+            disabled={!enableZoomButton}
+            checked={isZoomed}
+            onClick={() => {
+              setIsZoomed(!isZoomed);
+              setZoomPhotoIndex(!isZoomed ? 1 : 0);
+            }}
+            defaultChecked={false}
+          />
+        ) : (
+          <span />
+        )}
       </div>
     </div>
   );
