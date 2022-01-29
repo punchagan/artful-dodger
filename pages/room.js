@@ -11,6 +11,8 @@ export default function Room({ config }) {
   const { name } = router.query;
   let tagRoom = name ? extraRooms.find((it) => it.id === name) : undefined;
   let title = tagRoom ? tagRoom.title : name ? tagToTitle(name) : "";
+  const devEnv = process.env.NODE_ENV !== "production";
+  const imagePrefix = devEnv && !config.forceCDN ? "" : config.imagePrefix;
 
   let transform;
   switch (name) {
@@ -27,11 +29,7 @@ export default function Room({ config }) {
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
       <PageHeader title={title} />
-      <PhotoList
-        metadataUrl={config.metadataUrl}
-        imagePrefix={config.imagePrefix}
-        transform={transform}
-      />
+      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} transform={transform} />
     </BaseLayout>
   );
 }

@@ -14,9 +14,8 @@ const columnsCountBreakPoints = {
   1600: 4, // xxl
 };
 
-const devEnv = process.env.NODE_ENV !== "production";
-const thumbnailUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
-const photoUrl = (id, imagePrefix) => (devEnv ? `/image/${id}` : `${imagePrefix}/image/${id}`);
+const thumbnailUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
+const photoUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
 
 const removeArtworkQueryParam = (router) => {
   const { pathname, query: oldQuery } = router;
