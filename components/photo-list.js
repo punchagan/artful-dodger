@@ -95,7 +95,7 @@ export default function PhotoList({ metadataUrl, transform, imagePrefix, random 
     setPhotos(p);
   }, [data.length, random]);
 
-  const pageSize = 15;
+  const pageSize = 30;
   const [showCount, setShowCount] = useState(pageSize);
 
   const [isOpen, setIsOpen] = useState(false);
