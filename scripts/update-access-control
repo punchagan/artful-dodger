@@ -10,7 +10,10 @@ import yaml
 def fetch_access_emails(url):
     f = io.StringIO(requests.get(url).text)
     emails = [
-        val.strip() for row in csv.DictReader(f) for key, val in row.items() if key == "email"
+        val.strip()
+        for row in csv.DictReader(f)
+        for key, val in row.items()
+        if key == "email"
     ]
     return emails
 
@@ -19,14 +22,21 @@ def replace_access_list(config_file, emails):
     with open(config_file) as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
 
+    old_emails = data.get("vouch", {}).get("whiteList", [])
+    if old_emails == emails:
+        return False
+
     data["vouch"]["whiteList"] = emails
 
     with open(config_file, "w") as g:
         data = yaml.dump(data, g)
 
+    return True
+
 
 if __name__ == "__main__":
     import argparse
+    import sys
 
     parser = argparse.ArgumentParser()
     parser.add_argument("config_file")
@@ -34,4 +44,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     emails = fetch_access_emails(args.metadata_url)
-    replace_access_list(args.config_file, emails)
+    changed = replace_access_list(args.config_file, emails)
+
+    sys.exit(not changed)
