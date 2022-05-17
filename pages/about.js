@@ -6,7 +6,6 @@ import { pageStaticProps } from "../lib/page-utils";
 export default function About({ config }) {
   return (
     <BaseLayout pageTitle={`About — ${config.title}`} siteTitle={config.title}>
-      <PageHeader title="About" subTitle={config.aboutDescription} />
       <div dangerouslySetInnerHTML={{ __html: config.aboutData }} />
     </BaseLayout>
   );
