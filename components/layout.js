@@ -9,6 +9,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
   const router = useRouter();
   const paths = [
     { name: "/", title: siteTitle },
+    { name: "/rooms", title: "Viewing Rooms" },
     { name: "/about", title: "About" },
   ];
   const selectedKeys = paths.reduce(
