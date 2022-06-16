@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
-import { miscRooms, artistFilter, mediumFilter } from "../components/room-list";
+import { miscRooms, artistFilter, mediumFilter, sizeFilter } from "../components/room-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
 import { PageHeader, Breadcrumb } from "antd";
@@ -19,6 +19,10 @@ export default function Room({ config }) {
       break;
 
     case "tag":
+      title = tagToTitle(name);
+      break;
+
+    case "size":
       title = tagToTitle(name);
       break;
 
@@ -42,6 +46,10 @@ export default function Room({ config }) {
 
     case "medium":
       filter = mediumFilter(name);
+      break;
+
+    case "size":
+      filter = sizeFilter(name);
       break;
   }
 

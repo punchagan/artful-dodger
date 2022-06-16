@@ -62,6 +62,29 @@ export const artistFilter = (artist) => (p) => p.artist === artist;
 const mediumTransform = (medium) => medium?.split(" on ")[0];
 export const mediumFilter = (medium) => (p) => mediumTransform(p.medium) === medium;
 
+const sizes = ["small", "medium", "large"];
+export const sizeFilter = (size) => (p) => {
+  const area = p.height * p.width;
+  const smallArea = 900; // 30 * 30;
+  const mediumArea = 2700; //60 * 45;
+
+  let sizeMatch = false;
+  switch (size) {
+    case "small":
+      sizeMatch = area < smallArea;
+      break;
+
+    case "medium":
+      sizeMatch = smallArea <= area && area < mediumArea;
+      break;
+
+    case "large":
+      sizeMatch = mediumArea <= area;
+      break;
+  }
+  return sizeMatch;
+};
+
 const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
   const ids = Array.from(
     new Set(
@@ -86,10 +109,17 @@ export default function Rooms({ photos, loading }) {
   const artistRooms = makeRooms(photos, "artist", artistFilter);
   const tagRooms = makeRooms(photos, "tags", tagFilter, tagToTitle);
   const mediumRooms = makeRooms(photos, "medium", mediumFilter, undefined, mediumTransform);
+  const sizeRooms = sizes.map((size) => ({
+    id: size,
+    title: tagToTitle(size),
+    filter: sizeFilter(size),
+  }));
+
   return loading ? (
     <Loading />
   ) : (
     <>
+      <RoomsSection rooms={sizeRooms} photos={photos} section="size" sectionName="Size" />
       <RoomsSection rooms={mediumRooms} photos={photos} section="medium" sectionName="Medium" />
       <RoomsSection rooms={artistRooms} photos={photos} section="artist" sectionName="Artist" />
       <RoomsSection rooms={tagRooms} photos={photos} section="tag" sectionName="Themes" />
