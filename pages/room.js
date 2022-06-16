@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
-import { miscRooms, artistFilter } from "../components/room-list";
+import { miscRooms, artistFilter, mediumFilter } from "../components/room-list";
 import { pageStaticProps } from "../lib/page-utils";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
 import { PageHeader, Breadcrumb } from "antd";
@@ -38,6 +38,10 @@ export default function Room({ config }) {
 
     case "artist":
       filter = artistFilter(name);
+      break;
+
+    case "medium":
+      filter = mediumFilter(name);
       break;
   }
 

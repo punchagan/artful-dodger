@@ -59,9 +59,20 @@ export const miscRooms = [
 ];
 
 export const artistFilter = (artist) => (p) => p.artist === artist;
+const mediumTransform = (medium) => medium?.split(" on ")[0];
+export const mediumFilter = (medium) => (p) => mediumTransform(p.medium) === medium;
 
-const makeRooms = (photos, attribute, filter, toTitle) => {
-  const ids = Array.from(new Set(photos.map((x) => x[attribute]).flat()))
+const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
+  const ids = Array.from(
+    new Set(
+      photos
+        .map((x) => {
+          const attrValue = x[attribute];
+          return attrTransform ? attrTransform(attrValue) : attrValue;
+        })
+        .flat()
+    )
+  )
     .filter((it) => Boolean(it))
     .sort();
   return ids.map((id) => ({
@@ -74,10 +85,12 @@ const makeRooms = (photos, attribute, filter, toTitle) => {
 export default function Rooms({ photos, loading }) {
   const artistRooms = makeRooms(photos, "artist", artistFilter);
   const tagRooms = makeRooms(photos, "tags", tagFilter, tagToTitle);
+  const mediumRooms = makeRooms(photos, "medium", mediumFilter, undefined, mediumTransform);
   return loading ? (
     <Loading />
   ) : (
     <>
+      <RoomsSection rooms={mediumRooms} photos={photos} section="medium" sectionName="Medium" />
       <RoomsSection rooms={artistRooms} photos={photos} section="artist" sectionName="Artist" />
       <RoomsSection rooms={tagRooms} photos={photos} section="tag" sectionName="Themes" />
       <RoomsSection rooms={miscRooms} photos={photos} section="misc" sectionName="Miscellaneous" />
