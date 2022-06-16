@@ -9,7 +9,7 @@ const findFirstUnused = (photos, metadata) => {
   return photos.find((it) => !previousThumbnails.has(it.thumbnail));
 };
 
-function RoomsSection({ rooms, sectionName, photos, loading }) {
+function RoomsSection({ rooms, section, sectionName, photos, loading }) {
   const metadata = [];
   rooms.forEach((room, idx) => {
     const meta = findFirstUnused(photos.filter(room.filter), metadata);
@@ -23,7 +23,7 @@ function RoomsSection({ rooms, sectionName, photos, loading }) {
       <h2 style={{ textAlign: "center" }}>{sectionName}</h2>
       <Row justify="center" align="middle" gutter={[16, 16]}>
         {metadata.map((room, idx) => {
-          let href = `/room/?name=${room.id}`;
+          let href = `/room/?name=${room.id}&type=${section}`;
           return (
             <Col
               className="gutter-row"
@@ -58,23 +58,29 @@ export const miscRooms = [
   { title: "Sold", id: "sold", filter: (p) => p.sold },
 ];
 
-export default function Rooms({ photos, loading }) {
-  // Tags/Themes rooms
-  const tags = Array.from(new Set(photos.map((x) => x.tags).flat()))
+export const artistFilter = (artist) => (p) => p.artist === artist;
+
+const makeRooms = (photos, attribute, filter, toTitle) => {
+  const ids = Array.from(new Set(photos.map((x) => x[attribute]).flat()))
     .filter((it) => Boolean(it))
     .sort();
-  const tagsRooms = tags.map((tag) => ({
-    title: tagToTitle(tag),
-    id: tag,
-    filter: tagFilter(tag),
+  return ids.map((id) => ({
+    title: toTitle ? toTitle(id) : id,
+    id: id,
+    filter: filter(id),
   }));
+};
 
+export default function Rooms({ photos, loading }) {
+  const artistRooms = makeRooms(photos, "artist", artistFilter);
+  const tagRooms = makeRooms(photos, "tags", tagFilter, tagToTitle);
   return loading ? (
     <Loading />
   ) : (
     <>
-      <RoomsSection rooms={tagsRooms} photos={photos} sectionName="Themes" />
-      <RoomsSection rooms={miscRooms} photos={photos} sectionName="Miscellaneous" />
+      <RoomsSection rooms={artistRooms} photos={photos} section="artist" sectionName="Artist" />
+      <RoomsSection rooms={tagRooms} photos={photos} section="tag" sectionName="Themes" />
+      <RoomsSection rooms={miscRooms} photos={photos} section="misc" sectionName="Miscellaneous" />
     </>
   );
 }
