@@ -33,7 +33,7 @@ const transformData = (p, number, imagePrefix) => {
   const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
   const photo = photoUrl(p.thumbnail, imagePrefix);
   const sold = p.sold?.trim().toLowerCase() === "y";
-  const price = p.sold ? `Sold` : `₹ ${p.price}`;
+  const displayPrice = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
   const title = `${tagToTitle(p.title)} by ${tagToTitle(p.artist)}`;
   const tags = p.viewing_rooms
@@ -52,7 +52,7 @@ const transformData = (p, number, imagePrefix) => {
     ...p,
     title,
     sold,
-    price,
+    displayPrice,
     size,
     tags,
     photo,
@@ -184,7 +184,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
       >
         <span>{photo?.title}</span>
         <span style={{ color: "#fffff", opacity: "0.6", fontSize: "0.9em" }}>
-          {[photo?.medium, photo?.size, photo?.price].join(", ")}
+          {[photo?.medium, photo?.size, photo?.displayPrice].join(", ")}
         </span>
       </div>
       <div

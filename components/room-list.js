@@ -85,6 +85,26 @@ export const sizeFilter = (size) => (p) => {
   return sizeMatch;
 };
 
+const prices = ["< ₹ 8,000", "₹ 8,000 — ₹ 16,000", "> ₹ 16,000"];
+export const priceFilter = (priceRange) => (p) => {
+  const price = p.price;
+  let priceMatch = false;
+  switch (priceRange) {
+    case prices[0]:
+      priceMatch = price < 8_000;
+      break;
+
+    case prices[1]:
+      priceMatch = 8_000 <= price && price < 16_000;
+      break;
+
+    case prices[2]:
+      priceMatch = 16_000 <= price;
+      break;
+  }
+  return priceMatch;
+};
+
 const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
   const ids = Array.from(
     new Set(
@@ -114,11 +134,17 @@ export default function Rooms({ photos, loading }) {
     title: tagToTitle(size),
     filter: sizeFilter(size),
   }));
+  const priceRooms = prices.map((price) => ({
+    id: price,
+    title: price,
+    filter: priceFilter(price),
+  }));
 
   return loading ? (
     <Loading />
   ) : (
     <>
+      <RoomsSection rooms={priceRooms} photos={photos} section="price" sectionName="Price" />
       <RoomsSection rooms={sizeRooms} photos={photos} section="size" sectionName="Size" />
       <RoomsSection rooms={mediumRooms} photos={photos} section="medium" sectionName="Medium" />
       <RoomsSection rooms={artistRooms} photos={photos} section="artist" sectionName="Artist" />
