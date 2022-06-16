@@ -7,10 +7,10 @@ export default function Rooms({ config }) {
   const devEnv = process.env.NODE_ENV !== "production";
   const imagePrefix = devEnv && !config.forceCDN ? "" : config.imagePrefix;
   const { loading, photos } = usePhotos(config.metadataUrl, imagePrefix);
-  const transform = (arr) => arr.filter((it) => !it.sold);
+  const filter = (it) => !it.sold;
   return (
     <BaseLayout siteTitle={config.title} pageTitle={config.title}>
-      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} transform={transform} />
+      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>
   );
 }

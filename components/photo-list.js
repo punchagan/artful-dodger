@@ -84,11 +84,11 @@ export const usePhotos = (url, imagePrefix) => {
   return { loading, photos };
 };
 
-export default function PhotoList({ metadataUrl, transform, imagePrefix, random = true }) {
+export default function PhotoList({ metadataUrl, filter, imagePrefix, random = true }) {
   const { loading, photos: data } = usePhotos(metadataUrl, imagePrefix);
   const [photos, setPhotos] = useState([]);
   useEffect(() => {
-    let p = transform ? transform(data) : data;
+    let p = filter ? data.filter(filter) : data;
     if (random) {
       p = p.sort(() => Math.random() - 0.5);
     }

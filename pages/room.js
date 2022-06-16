@@ -14,22 +14,22 @@ export default function Room({ config }) {
   const devEnv = process.env.NODE_ENV !== "production";
   const imagePrefix = devEnv && !config.forceCDN ? "" : config.imagePrefix;
 
-  let transform;
+  let filter;
   switch (name) {
     case "all":
-      transform = undefined;
+      filter = (it) => it;
       break;
     case "sold":
-      transform = (arr) => arr.filter((it) => it.sold);
+      filter = (it) => it.sold;
       break;
     default:
-      transform = (array) => array.filter(tagFilter(name));
+      filter = tagFilter(name);
   }
 
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
       <PageHeader title={title} />
-      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} transform={transform} />
+      <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>
   );
 }
