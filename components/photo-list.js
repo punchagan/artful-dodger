@@ -6,13 +6,7 @@ import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-
-// Breakpoint widths taken from https://ant.design/components/layout/
-const columnsCountBreakPoints = {
-  576: 2, // sm
-  992: 3, // lg
-  1600: 4, // xxl
-};
+import { columnsCountBreakPoints } from "../lib/constants";
 
 const thumbnailUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
 const photoUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
