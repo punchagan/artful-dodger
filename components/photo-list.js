@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Image, Tag, Button, Switch } from "antd";
 import Loading from "./loading";
-import { toTitle } from "../lib/data-utils";
+import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -35,7 +35,9 @@ const transformData = (p, number, imagePrefix) => {
   const sold = p.sold?.trim().toLowerCase() === "y";
   const displayPrice = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
-  const title = `${toTitle(p.title)} by ${toTitle(p.artist)}`;
+  const name = toTitle(p.title);
+  const artistName = toTitle(p.artist);
+  const title = `${name} by ${artistName}`;
   const tags = p.viewing_rooms
     ?.split(";")
     .map((x) => x.trim())
@@ -50,6 +52,8 @@ const transformData = (p, number, imagePrefix) => {
   const extraPhotos = extraThumbnailIDs.map((id) => photoUrl(id, imagePrefix));
   return {
     ...p,
+    name,
+    artistName,
     title,
     sold,
     displayPrice,
@@ -172,6 +176,12 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     }
   };
 
+  const linkStyle = {
+    color: "#fff",
+    paddingRight: "5px",
+    borderRight: "1px solid",
+    marginRight: "5px",
+  };
   const caption = (photo) => (
     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
       <div
@@ -182,9 +192,29 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           justifyContent: "space-between",
         }}
       >
-        <span>{photo?.title}</span>
-        <span style={{ color: "#fffff", opacity: "0.6", fontSize: "0.9em" }}>
-          {[photo?.medium, photo?.size, photo?.displayPrice].join(", ")}
+        <span>
+          {`${photo?.name} by `}
+          <a style={{ color: "#fff" }} href={`/room?name=${photo?.artistName}&type=artist`}>
+            {photo?.artistName}
+          </a>
+        </span>
+        <span style={{ opacity: "0.6", fontSize: "0.9em" }}>
+          <a style={linkStyle} href={`/room?name=${getMedium(photo)}&type=medium`}>
+            {photo?.medium}
+          </a>
+          <a style={linkStyle} href={`/room?name=${getSize(photo)}&type=size`}>
+            {photo?.size}
+          </a>
+          <a
+            style={linkStyle}
+            href={
+              photo?.sold
+                ? `/room?name=sold&type=misc`
+                : `/room?name=${getPriceRange(photo)}&type=price`
+            }
+          >
+            {photo?.displayPrice}
+          </a>
         </span>
       </div>
       <div
