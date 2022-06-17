@@ -2,7 +2,7 @@ import Link from "next/link";
 import RoomList from "../components/room-list";
 import Loading from "../components/loading";
 import { tagFilter, tagToTitle } from "../lib/tag-utils";
-import { Image, Row, Col, Card, Avatar, Typography, Space } from "antd";
+import { Image, Row, Col, Card, Avatar, Typography, Space, Collapse } from "antd";
 
 const findFirstUnused = (photos, metadata) => {
   const previousThumbnails = new Set(metadata.map((it) => it.thumbnail));
@@ -20,7 +20,6 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     <Loading />
   ) : (
     <div>
-      <h2 style={{ textAlign: "center" }}>{sectionName}</h2>
       <Row justify="center" align="middle" gutter={[16, 16]}>
         {metadata.map((room, idx) => {
           let href = `/room/?name=${room.id}&type=${section}`;
@@ -147,18 +146,24 @@ export default function Rooms({ photos, loading }) {
     { rooms: tagRooms, section: "tag", sectionName: "Theme" },
     { rooms: miscRooms, section: "misc", sectionName: "Miscellaneous" },
   ];
+  const { Panel } = Collapse;
+  const activeKey = sections[0].section;
 
   return loading ? (
     <Loading />
   ) : (
-    sections.map(({ section, rooms, sectionName }) => (
-      <RoomsSection
-        key={section}
-        rooms={rooms}
-        photos={photos}
-        section={section}
-        sectionName={sectionName}
-      />
-    ))
+    <Collapse defaultActiveKey={activeKey} bordered={true} accordion ghost>
+      {sections.map(({ section, rooms, sectionName }) => (
+        <Panel header={sectionName} key={section}>
+          <RoomsSection
+            key={section}
+            rooms={rooms}
+            photos={photos}
+            section={section}
+            sectionName={sectionName}
+          />
+        </Panel>
+      ))}
+    </Collapse>
   );
 }
