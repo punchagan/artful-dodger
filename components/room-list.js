@@ -139,17 +139,26 @@ export default function Rooms({ photos, loading }) {
     title: price,
     filter: priceFilter(price),
   }));
+  const sections = [
+    { rooms: priceRooms, section: "price", sectionName: "Price" },
+    { rooms: sizeRooms, section: "size", sectionName: "Size" },
+    { rooms: mediumRooms, section: "medium", sectionName: "Medium" },
+    { rooms: artistRooms, section: "artist", sectionName: "Artist" },
+    { rooms: tagRooms, section: "tag", sectionName: "Theme" },
+    { rooms: miscRooms, section: "misc", sectionName: "Miscellaneous" },
+  ];
 
   return loading ? (
     <Loading />
   ) : (
-    <>
-      <RoomsSection rooms={priceRooms} photos={photos} section="price" sectionName="Price" />
-      <RoomsSection rooms={sizeRooms} photos={photos} section="size" sectionName="Size" />
-      <RoomsSection rooms={mediumRooms} photos={photos} section="medium" sectionName="Medium" />
-      <RoomsSection rooms={artistRooms} photos={photos} section="artist" sectionName="Artist" />
-      <RoomsSection rooms={tagRooms} photos={photos} section="tag" sectionName="Themes" />
-      <RoomsSection rooms={miscRooms} photos={photos} section="misc" sectionName="Miscellaneous" />
-    </>
+    sections.map(({ section, rooms, sectionName }) => (
+      <RoomsSection
+        key={section}
+        rooms={rooms}
+        photos={photos}
+        section={section}
+        sectionName={sectionName}
+      />
+    ))
   );
 }
