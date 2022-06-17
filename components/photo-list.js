@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Image, Tag, Button, Switch } from "antd";
 import Loading from "./loading";
-import { tagToTitle } from "../lib/tag-utils";
+import { toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -35,7 +35,7 @@ const transformData = (p, number, imagePrefix) => {
   const sold = p.sold?.trim().toLowerCase() === "y";
   const displayPrice = p.sold ? `Sold` : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
-  const title = `${tagToTitle(p.title)} by ${tagToTitle(p.artist)}`;
+  const title = `${toTitle(p.title)} by ${toTitle(p.artist)}`;
   const tags = p.viewing_rooms
     ?.split(";")
     .map((x) => x.trim())

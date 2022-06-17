@@ -1,15 +1,16 @@
 import { useRouter } from "next/router";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
+import { miscRooms } from "../components/room-list";
+import { pageStaticProps } from "../lib/page-utils";
 import {
-  miscRooms,
   artistFilter,
   mediumFilter,
   sizeFilter,
   priceFilter,
-} from "../components/room-list";
-import { pageStaticProps } from "../lib/page-utils";
-import { tagFilter, tagToTitle } from "../lib/tag-utils";
+  tagFilter,
+  toTitle,
+} from "../lib/data-utils";
 import { PageHeader, Breadcrumb } from "antd";
 
 export default function Room({ config }) {
@@ -25,11 +26,11 @@ export default function Room({ config }) {
       break;
 
     case "tag":
-      title = tagToTitle(name);
+      title = toTitle(name);
       break;
 
     case "size":
-      title = tagToTitle(name);
+      title = toTitle(name);
       break;
 
     default:
