@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
-import { miscRooms } from "../components/room-list";
 import { pageStaticProps } from "../lib/page-utils";
 import {
   artistFilter,
@@ -11,6 +10,7 @@ import {
   tagFilter,
   toTitle,
 } from "../lib/data-utils";
+import { miscRooms } from "../lib/constants";
 import { PageHeader, Breadcrumb } from "antd";
 
 export default function Room({ config }) {

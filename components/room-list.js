@@ -14,6 +14,7 @@ import {
   sizeCompare,
   priceRangeCompare,
 } from "../lib/data-utils";
+import { miscRooms } from "../lib/constants";
 import { Image, Row, Col, Card, Avatar, Typography, Space, Collapse } from "antd";
 
 function RoomsSection({ rooms, section, sectionName, photos, loading }) {
@@ -77,12 +78,6 @@ const makeRooms = (photos, attribute, filter, toTitle, compareFn) => {
     filter: filter(id),
   }));
 };
-
-// Miscellaneous Rooms
-export const miscRooms = [
-  { title: "Full Collection", id: "all", filter: (p) => p },
-  { title: "Sold", id: "sold", filter: (p) => p.sold },
-];
 
 export default function Rooms({ photos, loading }) {
   const artistRooms = makeRooms(photos, "artist", artistFilter);
