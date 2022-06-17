@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Loading from "../components/loading";
 import {
@@ -13,8 +14,15 @@ import {
   sizeCompare,
   priceRangeCompare,
 } from "../lib/data-utils";
-import { miscRooms, viewingRoomSections } from "../lib/constants";
-import { Image, Row, Col, Card, Avatar, Typography, Space, PageHeader } from "antd";
+import { miscRooms, viewingRoomSections, columnsCountBreakPoints } from "../lib/constants";
+import { Avatar, Typography, Space, PageHeader } from "antd";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+
+const getAvatarSize = (n, gap) => {
+  const w = window.innerWidth;
+  const gapAll = gap * (n + 1);
+  return (w - gapAll) / n;
+};
 
 function RoomsSection({ rooms, section, sectionName, photos, loading }) {
   const metadata = [];
@@ -22,6 +30,24 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     const previousThumbnails = new Set(metadata.map((it) => it.thumbnail));
     return photos.find((it) => !previousThumbnails.has(it.thumbnail));
   };
+  const gutterSize = 24;
+  const [avatarSizes, setAvatarSizes] = useState({});
+
+  useEffect(() => {
+    const autoResize = () => {
+      const sizes = {
+        xs: getAvatarSize(2, gutterSize),
+        sm: getAvatarSize(2, gutterSize),
+        md: getAvatarSize(2, gutterSize),
+        lg: getAvatarSize(3, gutterSize),
+        xl: getAvatarSize(3, gutterSize),
+        xxl: getAvatarSize(4, gutterSize),
+      };
+      setAvatarSizes(sizes);
+    };
+    window.addEventListener("resize", autoResize);
+    autoResize();
+  }, []);
 
   rooms.forEach((room, idx) => {
     const meta = findFirstUnused(photos.filter(room.filter), metadata);
@@ -33,33 +59,26 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
   ) : (
     <>
       <PageHeader title={`${sectionName}`} />
-      <Row justify="center" align="middle" gutter={[16, 16]}>
-        {metadata.map((room, idx) => {
-          let href = `/room/?name=${room.id}&type=${section}`;
-          return (
-            <Col
-              className="gutter-row"
-              style={{ textAlign: "center" }}
-              key={idx}
-              span={{ xs: 12, sm: 12, md: 12, lg: 8, xl: 8, xxl: 8 }}
-            >
-              <Card bordered={false} hoverable={false}>
-                <Link href={href}>
-                  <Space direction="vertical">
-                    <Avatar
-                      style={{ cursor: "pointer" }}
-                      shape="square"
-                      size={{ xs: 96, sm: 128, md: 128, lg: 256, xl: 256, xxl: 256 }}
-                      src={room.thumbnail}
-                    />
-                    <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
-                  </Space>
-                </Link>
-              </Card>
-            </Col>
-          );
-        })}
-      </Row>
+      <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
+        <Masonry gutter={gutterSize}>
+          {metadata.map((room, idx) => {
+            let href = `/room/?name=${room.id}&type=${section}`;
+            return (
+              <Link href={href}>
+                <Space direction="vertical" style={{ textAlign: "center" }}>
+                  <Avatar
+                    style={{ cursor: "pointer" }}
+                    shape="square"
+                    size={avatarSizes}
+                    src={room.thumbnail}
+                  />
+                  <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
+                </Space>
+              </Link>
+            );
+          })}
+        </Masonry>
+      </ResponsiveMasonry>
     </>
   );
 }
