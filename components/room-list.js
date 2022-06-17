@@ -1,5 +1,4 @@
 import Link from "next/link";
-import RoomList from "../components/room-list";
 import Loading from "../components/loading";
 import {
   artistFilter,
@@ -14,8 +13,8 @@ import {
   sizeCompare,
   priceRangeCompare,
 } from "../lib/data-utils";
-import { miscRooms } from "../lib/constants";
-import { Image, Row, Col, Card, Avatar, Typography, Space, Collapse } from "antd";
+import { miscRooms, viewingRoomSections } from "../lib/constants";
+import { Image, Row, Col, Card, Avatar, Typography, Space, PageHeader } from "antd";
 
 function RoomsSection({ rooms, section, sectionName, photos, loading }) {
   const metadata = [];
@@ -32,7 +31,8 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
   return loading ? (
     <Loading />
   ) : (
-    <div>
+    <>
+      <PageHeader title={`${sectionName}`} />
       <Row justify="center" align="middle" gutter={[16, 16]}>
         {metadata.map((room, idx) => {
           let href = `/room/?name=${room.id}&type=${section}`;
@@ -60,7 +60,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
           );
         })}
       </Row>
-    </div>
+    </>
   );
 }
 
@@ -79,38 +79,45 @@ const makeRooms = (photos, attribute, filter, toTitle, compareFn) => {
   }));
 };
 
-export default function Rooms({ photos, loading }) {
-  const artistRooms = makeRooms(photos, "artist", artistFilter);
-  const tagRooms = makeRooms(photos, "tags", tagFilter, toTitle);
-  const mediumRooms = makeRooms(photos, getMedium, mediumFilter);
-  const sizeRooms = makeRooms(photos, getSize, sizeFilter, toTitle, sizeCompare);
-  const priceRooms = makeRooms(photos, getPriceRange, priceFilter, undefined, priceRangeCompare);
-  const sections = [
-    { rooms: priceRooms, section: "price", sectionName: "Price" },
-    { rooms: sizeRooms, section: "size", sectionName: "Size" },
-    { rooms: mediumRooms, section: "medium", sectionName: "Medium" },
-    { rooms: artistRooms, section: "artist", sectionName: "Artist" },
-    { rooms: tagRooms, section: "tag", sectionName: "Theme" },
-    { rooms: miscRooms, section: "misc", sectionName: "Miscellaneous" },
-  ];
-  const { Panel } = Collapse;
-  const activeKey = sections[0].section;
+export default function RoomList({ photos, loading, section = "artist" }) {
+  const section_ = viewingRoomSections.find((v) => v.name === section);
+  let sectionName = section_ ? section_.title : toTitle(section);
+  let rooms = [];
+  switch (section) {
+    case "price":
+      rooms = makeRooms(photos, getPriceRange, priceFilter, undefined, priceRangeCompare);
+      break;
+
+    case "size":
+      rooms = makeRooms(photos, getSize, sizeFilter, toTitle, sizeCompare);
+      break;
+
+    case "medium":
+      rooms = makeRooms(photos, getMedium, mediumFilter);
+      break;
+
+    case "tag":
+      rooms = makeRooms(photos, "tags", tagFilter, toTitle);
+      break;
+
+    case "artist":
+      rooms = makeRooms(photos, "artist", artistFilter);
+      break;
+
+    case "misc":
+      rooms = miscRooms;
+      break;
+  }
 
   return loading ? (
     <Loading />
   ) : (
-    <Collapse defaultActiveKey={activeKey} bordered={true} accordion ghost>
-      {sections.map(({ section, rooms, sectionName }) => (
-        <Panel header={sectionName} key={section}>
-          <RoomsSection
-            key={section}
-            rooms={rooms}
-            photos={photos}
-            section={section}
-            sectionName={sectionName}
-          />
-        </Panel>
-      ))}
-    </Collapse>
+    <RoomsSection
+      key={section}
+      rooms={rooms}
+      photos={photos}
+      section={section}
+      sectionName={sectionName}
+    />
   );
 }

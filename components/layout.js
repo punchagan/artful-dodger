@@ -4,12 +4,14 @@ import Head from "next/head";
 import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
 const { Header, Content, Footer } = Layout;
+import { viewingRoomSections } from "../lib/constants";
 
 export default function BaseLayout({ children, siteTitle, pageTitle }) {
   const router = useRouter();
+  const subMenu = viewingRoomSections;
   const paths = [
     { name: "/", title: siteTitle },
-    { name: "/rooms", title: "Viewing Rooms" },
+    { name: "/rooms", title: "Viewing Rooms", subMenu },
     { name: "/about", title: "About" },
   ];
   const selectedKeys = paths.reduce(
@@ -37,11 +39,25 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
             selectedKeys={selectedKeys}
             style={{ backgroundColor, borderBottom }}
           >
-            {paths.map((path, idx) => (
-              <Menu.Item key={path.name}>
-                <Link href={path.name}>{path.title}</Link>
-              </Menu.Item>
-            ))}
+            {paths.map((path, idx) =>
+              path.subMenu ? (
+                <Menu.SubMenu
+                  key={path.name}
+                  title={path.title}
+                  style={{ backgroundColor, borderBottom }}
+                >
+                  {path.subMenu.map((section) => (
+                    <Menu.Item key={section.name}>
+                      <Link href={`${path.name}?section=${section.name}`}>{section.title}</Link>
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item key={path.name}>
+                  <Link href={path.name}>{path.title}</Link>
+                </Menu.Item>
+              )
+            )}
           </Menu>
         </Header>
         <Content style={{ minWidth: "100%" }}>{children}</Content>
