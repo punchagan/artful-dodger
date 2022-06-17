@@ -9,7 +9,7 @@
   padding: 0px !important;
 }
 
-.ant-menu-submenu,
+.ant-menu-submenu-title,
 .ant-menu-item {
   padding: 0px 0px 0px 24px !important;
 }
@@ -37,15 +37,18 @@
 .ant-menu-submenu-active,
 .ant-menu-submenu-selected,
 .ant-menu-submenu-title:hover,
+.ant-menu-submenu-open,
 .ant-menu-item-selected a,
 .ant-menu-item a:hover {
   color: rgba(0, 0, 0, 0.85) !important;
   font-weight: bold;
 }
 
+.ant-menu-submenu::after,
 .ant-menu-submenu-active::after,
 .ant-menu-submenu-title::after,
 .ant-menu-submenu-selected::after,
+.ant-menu-submenu-open::after,
 .ant-menu-item-selected::after,
 .ant-menu-item::after,
 .ant-menu-item:hover::after {
