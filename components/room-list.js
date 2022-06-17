@@ -62,46 +62,23 @@ const mediumTransform = (medium) => medium?.split(" on ")[0];
 export const mediumFilter = (medium) => (p) => mediumTransform(p.medium) === medium;
 
 const sizes = ["small", "medium", "large"];
-export const sizeFilter = (size) => (p) => {
+const getSize = (p) => {
   const area = p.height * p.width;
   const smallArea = 900; // 30 * 30;
   const mediumArea = 2700; //60 * 45;
-
-  let sizeMatch = false;
-  switch (size) {
-    case "small":
-      sizeMatch = area < smallArea;
-      break;
-
-    case "medium":
-      sizeMatch = smallArea <= area && area < mediumArea;
-      break;
-
-    case "large":
-      sizeMatch = mediumArea <= area;
-      break;
-  }
-  return sizeMatch;
+  return area < smallArea ? sizes[0] : smallArea <= area && area < mediumArea ? sizes[1] : sizes[2];
+};
+export const sizeFilter = (size) => (p) => {
+  return size === getSize(p);
 };
 
 const prices = ["< ₹ 8,000", "₹ 8,000 — ₹ 16,000", "> ₹ 16,000"];
-export const priceFilter = (priceRange) => (p) => {
+const getPriceRange = (p) => {
   const price = p.price;
-  let priceMatch = false;
-  switch (priceRange) {
-    case prices[0]:
-      priceMatch = price < 8_000;
-      break;
-
-    case prices[1]:
-      priceMatch = 8_000 <= price && price < 16_000;
-      break;
-
-    case prices[2]:
-      priceMatch = 16_000 <= price;
-      break;
-  }
-  return priceMatch;
+  return price < 8_000 ? prices[0] : 8_000 <= price && price < 16_000 ? prices[1] : prices[2];
+};
+export const priceFilter = (priceRange) => (p) => {
+  return priceRange === getPriceRange(p);
 };
 
 const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
