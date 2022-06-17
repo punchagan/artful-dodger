@@ -58,42 +58,36 @@ export const miscRooms = [
 ];
 
 export const artistFilter = (artist) => (p) => p.artist === artist;
-const mediumTransform = (medium) => medium?.split(" on ")[0];
-export const mediumFilter = (medium) => (p) => mediumTransform(p.medium) === medium;
+
+const getMedium = (p) => p.medium?.split(" on ")[0];
+export const mediumFilter = (medium) => (p) => getMedium(p) === medium;
 
 const sizes = ["small", "medium", "large"];
+const sizeCompare = (a, b) => sizes.indexOf(b) < sizes.indexOf(a);
 const getSize = (p) => {
   const area = p.height * p.width;
   const smallArea = 900; // 30 * 30;
-  const mediumArea = 2700; //60 * 45;
+  const mediumArea = 2700; // 60 * 45;
   return area < smallArea ? sizes[0] : smallArea <= area && area < mediumArea ? sizes[1] : sizes[2];
 };
-export const sizeFilter = (size) => (p) => {
-  return size === getSize(p);
-};
+export const sizeFilter = (size) => (p) => getSize(p) === size;
 
 const prices = ["< ₹ 8,000", "₹ 8,000 — ₹ 16,000", "> ₹ 16,000"];
+const priceRangeCompare = (a, b) => prices.indexOf(b) < prices.indexOf(a);
 const getPriceRange = (p) => {
   const price = p.price;
   return price < 8_000 ? prices[0] : 8_000 <= price && price < 16_000 ? prices[1] : prices[2];
 };
-export const priceFilter = (priceRange) => (p) => {
-  return priceRange === getPriceRange(p);
-};
+export const priceFilter = (priceRange) => (p) => getPriceRange(p) === priceRange;
 
-const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
+const makeRooms = (photos, attribute, filter, toTitle, compareFn) => {
   const ids = Array.from(
     new Set(
-      photos
-        .map((x) => {
-          const attrValue = x[attribute];
-          return attrTransform ? attrTransform(attrValue) : attrValue;
-        })
-        .flat()
+      photos.map((x) => (typeof attribute === "function" ? attribute(x) : x[attribute])).flat()
     )
   )
     .filter((it) => Boolean(it))
-    .sort();
+    .sort(compareFn);
   return ids.map((id) => ({
     title: toTitle ? toTitle(id) : id,
     id: id,
@@ -104,17 +98,9 @@ const makeRooms = (photos, attribute, filter, toTitle, attrTransform) => {
 export default function Rooms({ photos, loading }) {
   const artistRooms = makeRooms(photos, "artist", artistFilter);
   const tagRooms = makeRooms(photos, "tags", tagFilter, tagToTitle);
-  const mediumRooms = makeRooms(photos, "medium", mediumFilter, undefined, mediumTransform);
-  const sizeRooms = sizes.map((size) => ({
-    id: size,
-    title: tagToTitle(size),
-    filter: sizeFilter(size),
-  }));
-  const priceRooms = prices.map((price) => ({
-    id: price,
-    title: price,
-    filter: priceFilter(price),
-  }));
+  const mediumRooms = makeRooms(photos, getMedium, mediumFilter);
+  const sizeRooms = makeRooms(photos, getSize, sizeFilter, tagToTitle, sizeCompare);
+  const priceRooms = makeRooms(photos, getPriceRange, priceFilter, undefined, priceRangeCompare);
   const sections = [
     { rooms: priceRooms, section: "price", sectionName: "Price" },
     { rooms: sizeRooms, section: "size", sectionName: "Size" },
