@@ -9,6 +9,7 @@
   padding: 0px !important;
 }
 
+.ant-menu-submenu,
 .ant-menu-item {
   padding: 0px 0px 0px 24px !important;
 }
