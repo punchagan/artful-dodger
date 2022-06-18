@@ -185,6 +185,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           alignItems: "flex-start",
           justifyContent: "space-between",
         }}
+        className="caption-left"
       >
         <span>
           {`${photo?.name} by `}

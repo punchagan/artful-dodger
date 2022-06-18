@@ -55,3 +55,7 @@
 .ant-menu-item:hover::after {
   border-bottom: none !important;
 }
+
+.caption-left a:hover {
+  font-weight: bold;
+}
