@@ -11,11 +11,12 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
   const subMenu = viewingRoomSections;
   const paths = [
     { name: "/", title: siteTitle },
-    { name: "/rooms", title: "Viewing Rooms", subMenu },
+    { name: "/rooms", alternateName: "/room", title: "Viewing Rooms", subMenu },
     { name: "/about", title: "About" },
   ];
   const selectedKeys = paths.reduce(
-    (acc, p) => (p.name === router.pathname ? [...acc, p.name] : acc),
+    (acc, p) =>
+      p.name === router.pathname || p.alternateName === router.pathname ? [...acc, p.name] : acc,
     []
   );
 
