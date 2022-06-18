@@ -15,7 +15,7 @@ import {
   priceRangeCompare,
 } from "../lib/data-utils";
 import { miscRooms, viewingRoomSections, columnsCountBreakPoints } from "../lib/constants";
-import { Avatar, Typography, Space, PageHeader } from "antd";
+import { Avatar, Typography, Space, Breadcrumb } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 const getAvatarSize = (n, gap) => {
@@ -58,7 +58,14 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     <Loading />
   ) : (
     <>
-      <PageHeader title={`${sectionName}`} />
+      <Space direction="vertical">
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <a href={`/rooms?section=${section}`}>{sectionName}</a>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <p>{/* For spacing */}</p>
+      </Space>
       <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
         <Masonry gutter={gutterSize}>
           {metadata.map((room, idx) => {
