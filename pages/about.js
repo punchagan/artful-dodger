@@ -1,6 +1,6 @@
 import Head from "next/head";
 import BaseLayout from "../components/layout";
-import { PageHeader, Descriptions } from "antd";
+import { Descriptions } from "antd";
 import { pageStaticProps } from "../lib/page-utils";
 
 export default function About({ config }) {

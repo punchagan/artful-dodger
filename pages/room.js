@@ -11,7 +11,7 @@ import {
   toTitle,
 } from "../lib/data-utils";
 import { miscRooms, viewingRoomSections } from "../lib/constants";
-import { PageHeader, Breadcrumb, Space } from "antd";
+import { Breadcrumb, Space } from "antd";
 
 export default function Room({ config }) {
   const router = useRouter();

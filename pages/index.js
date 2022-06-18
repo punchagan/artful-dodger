@@ -1,7 +1,6 @@
 import BaseLayout from "../components/layout";
 import PhotoList, { usePhotos } from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
-import { PageHeader } from "antd";
 
 export default function Rooms({ config }) {
   const devEnv = process.env.NODE_ENV !== "production";
