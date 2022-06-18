@@ -10,8 +10,8 @@ import {
   tagFilter,
   toTitle,
 } from "../lib/data-utils";
-import { miscRooms } from "../lib/constants";
-import { PageHeader, Breadcrumb } from "antd";
+import { miscRooms, viewingRoomSections } from "../lib/constants";
+import { PageHeader, Breadcrumb, Space } from "antd";
 
 export default function Room({ config }) {
   const router = useRouter();
@@ -63,10 +63,20 @@ export default function Room({ config }) {
       filter = priceFilter(name);
       break;
   }
+  const section = viewingRoomSections.find((v) => v.name === type);
+  const sectionName = section ? section.title : toTitle(type);
 
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
-      <PageHeader title={title} />
+      <Space direction="vertical">
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <a href={`/rooms?section=${type}`}>{sectionName}</a>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>{title}</Breadcrumb.Item>
+        </Breadcrumb>
+        <p>{/* For spacing */}</p>
+      </Space>
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>
   );

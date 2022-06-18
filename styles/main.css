@@ -39,6 +39,7 @@
 .ant-menu-submenu-title:hover,
 .ant-menu-submenu-open,
 .ant-menu-item-selected a,
+.ant-breadcrumb-link a,
 .ant-menu-item a:hover {
   color: rgba(0, 0, 0, 0.85) !important;
   font-weight: bold;
