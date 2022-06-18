@@ -71,7 +71,7 @@ export default function Room({ config }) {
       <Space direction="vertical">
         <Breadcrumb separator=">">
           <Breadcrumb.Item>
-            <a href={`/rooms?section=${type}`}>{sectionName}</a>
+            <a href={`rooms?section=${type}`}>{sectionName}</a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>{title}</Breadcrumb.Item>
         </Breadcrumb>
