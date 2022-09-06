@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button, Switch } from "antd";
+import { Image, Tag, Button, Switch, Spin } from "antd";
 import Loading from "./loading";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import { columnsCountBreakPoints } from "../lib/constants";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const thumbnailUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
 const photoUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
@@ -121,21 +122,12 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   const enableZoomButton = extraPhotos?.length > 1;
   const photoCount = photos.length;
   const allLoaded = photoCount <= showCount;
-  console.log(allLoaded, photoCount, showCount);
-  const loadMore = (
+  const fetchMore = () => setShowCount(showCount + pageSize);
+  const countDisplay = (
     <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
       {allLoaded ? (
         <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
       ) : undefined}
-      {allLoaded ? undefined : (
-        <Button
-          size="small"
-          disabled={allLoaded}
-          onClick={() => setShowCount(showCount + pageSize)}
-        >
-          Load more
-        </Button>
-      )}
     </div>
   );
 
@@ -258,22 +250,33 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     <Loading />
   ) : (
     <>
-      <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
-        <Masonry gutter={1}>
-          {photos.slice(0, showCount).map((photo, idx) => (
-            <Image
-              onClick={() => openGalleryPhoto(idx)}
-              key={idx}
-              alt={photo.title}
-              preview={false}
-              style={{ cursor: "pointer" }}
-              src={photo.thumbnail}
-              fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
-            />
-          ))}
-        </Masonry>
-      </ResponsiveMasonry>
-      {loadMore}
+      <InfiniteScroll
+        dataLength={showCount}
+        next={fetchMore}
+        hasMore={!allLoaded}
+        loader={
+          <p style={{ textAlign: "center" }}>
+            <Spin />
+          </p>
+        }
+      >
+        <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
+          <Masonry gutter={1}>
+            {photos.slice(0, showCount).map((photo, idx) => (
+              <Image
+                onClick={() => openGalleryPhoto(idx)}
+                key={idx}
+                alt={photo.title}
+                preview={false}
+                style={{ cursor: "pointer" }}
+                src={photo.thumbnail}
+                fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
+              />
+            ))}
+          </Masonry>
+        </ResponsiveMasonry>
+      </InfiniteScroll>
+      {countDisplay}
       {isOpen && (
         <Lightbox
           onCloseRequest={onClose}
