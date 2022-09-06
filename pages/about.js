@@ -8,7 +8,7 @@ export default function About({ config }) {
   const { Content } = Layout;
   return (
     <BaseLayout pageTitle={`About — ${config.title}`} siteTitle={config.title}>
-      <Content>
+      <Content style={{ minWidth: "100%" }}>
         <div dangerouslySetInnerHTML={{ __html: config.aboutData }} />
       </Content>
     </BaseLayout>
