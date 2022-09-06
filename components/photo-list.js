@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button, Switch, Spin } from "antd";
+import { Image, Tag, Button, Switch, Spin, BackTop } from "antd";
 import Loading from "./loading";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
@@ -248,6 +248,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     <Loading />
   ) : (
     <>
+      <BackTop />
       <InfiniteScroll
         dataLength={showCount}
         next={fetchMore}
