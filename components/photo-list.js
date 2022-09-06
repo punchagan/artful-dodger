@@ -26,8 +26,9 @@ const setArtworkQueryParam = (router, artwork) => {
 const transformData = (p, number, imagePrefix) => {
   const thumbnail = p.thumbnail ? thumbnailUrl(p.thumbnail, imagePrefix) : "";
   const photo = photoUrl(p.thumbnail, imagePrefix);
-  const sold = p.sold?.trim().toLowerCase() === "y";
-  const displayPrice = p.sold ? `Sold` : `₹ ${p.price}`;
+  const sold = p.status?.trim().toLowerCase() === "s";
+  const archived = p.status?.trim().toLowerCase() === "ar";
+  const displayPrice = sold ? "Sold" : archived ? "Archived" : `₹ ${p.price}`;
   const size = `${p.height} x ${p.width} cm`;
   const name = toTitle(p.title);
   const artistName = toTitle(p.artist);
@@ -50,6 +51,7 @@ const transformData = (p, number, imagePrefix) => {
     artistName,
     title,
     sold,
+    archived,
     displayPrice,
     size,
     tags,
