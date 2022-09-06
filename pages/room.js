@@ -68,14 +68,18 @@ export default function Room({ config }) {
 
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
-      <Space direction="vertical">
-        <Breadcrumb separator=">">
-          <Breadcrumb.Item>
-            <a href={`rooms?section=${type}`}>{sectionName}</a>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>{title}</Breadcrumb.Item>
-        </Breadcrumb>
+      <Space direction="horizontal" size={12}>
         <p>{/* For spacing */}</p>
+        <Space direction="vertical">
+          <p>{/* For spacing */}</p>
+          <Breadcrumb separator=">">
+            <Breadcrumb.Item>
+              <a href={`rooms?section=${type}`}>{sectionName}</a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{title}</Breadcrumb.Item>
+          </Breadcrumb>
+          <p>{/* For spacing */}</p>
+        </Space>
       </Space>
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>

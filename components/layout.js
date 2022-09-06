@@ -61,7 +61,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
             )}
           </Menu>
         </Header>
-        <Content style={{ minWidth: "100%" }}>{children}</Content>
+        <Content style={{ minWidth: "100%", padding: "0px" }}>{children}</Content>
         <Footer
           style={{
             textAlign: "center",

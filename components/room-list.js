@@ -14,7 +14,7 @@ import {
   sizeCompare,
   priceRangeCompare,
 } from "../lib/data-utils";
-import { miscRooms, viewingRoomSections, columnsCountBreakPoints } from "../lib/constants";
+import { miscRooms, viewingRoomSections, roomsColumnsCountBreakPoints } from "../lib/constants";
 import { Avatar, Typography, Space, Breadcrumb } from "antd";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
@@ -58,15 +58,19 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     <Loading />
   ) : (
     <>
-      <Space direction="vertical">
-        <Breadcrumb separator=">">
-          <Breadcrumb.Item>
-            <a href={`rooms?section=${section}`}>{sectionName}</a>
-          </Breadcrumb.Item>
-        </Breadcrumb>
+      <Space direction="horizontal" size={12}>
         <p>{/* For spacing */}</p>
+        <Space direction="vertical">
+          <p>{/* For spacing */}</p>
+          <Breadcrumb separator=">">
+            <Breadcrumb.Item>
+              <a href={`rooms?section=${section}`}>{sectionName}</a>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <p>{/* For spacing */}</p>
+        </Space>
       </Space>
-      <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
+      <ResponsiveMasonry columnsCountBreakPoints={roomsColumnsCountBreakPoints}>
         <Masonry gutter={gutterSize}>
           {metadata.map((room, idx) => {
             let href = `/room/?name=${room.id}&type=${section}`;
