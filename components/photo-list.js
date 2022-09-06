@@ -120,16 +120,22 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
 
   const enableZoomButton = extraPhotos?.length > 1;
   const photoCount = photos.length;
+  const allLoaded = photoCount <= showCount;
+  console.log(allLoaded, photoCount, showCount);
   const loadMore = (
     <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
-      <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
-      <Button
-        size="small"
-        disabled={photoCount <= showCount}
-        onClick={() => setShowCount(showCount + pageSize)}
-      >
-        Load more
-      </Button>
+      {allLoaded ? (
+        <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
+      ) : undefined}
+      {allLoaded ? undefined : (
+        <Button
+          size="small"
+          disabled={allLoaded}
+          onClick={() => setShowCount(showCount + pageSize)}
+        >
+          Load more
+        </Button>
+      )}
     </div>
   );
 
