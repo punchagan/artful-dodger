@@ -125,9 +125,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   const fetchMore = () => setShowCount(showCount + pageSize);
   const countDisplay = (
     <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
-      {allLoaded ? (
-        <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
-      ) : undefined}
+      <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
     </div>
   );
 
@@ -276,7 +274,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           </Masonry>
         </ResponsiveMasonry>
       </InfiniteScroll>
-      {countDisplay}
+      {allLoaded && countDisplay}
       {isOpen && (
         <Lightbox
           onCloseRequest={onClose}
