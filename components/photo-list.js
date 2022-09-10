@@ -176,7 +176,6 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   const linkStyle = {
     color: "#fff",
     paddingRight: "5px",
-    borderRight: "1px solid",
     marginRight: "5px",
   };
   const caption = (photo) => (
@@ -198,10 +197,10 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
         </span>
         <span style={{ opacity: "0.6", fontSize: "0.9em" }}>
           <a style={linkStyle} href={`/room?name=${getMedium(photo)}&type=medium`}>
-            {photo?.medium}
+            {`${photo?.medium}.`}
           </a>
           <a style={linkStyle} href={`/room?name=${getSize(photo)}&type=size`}>
-            {photo?.size}
+            {`${photo?.size}.`}
           </a>
           <a
             style={linkStyle}
