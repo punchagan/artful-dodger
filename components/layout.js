@@ -21,9 +21,6 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
   );
 
   const backgroundColor = "#ffffff";
-  const borderBottom = "solid 1px #d0d0d0";
-  const borderTop = borderBottom;
-
   const year = new Date().getYear() + 1900;
 
   return (
@@ -63,7 +60,6 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
           style={{
             textAlign: "center",
             backgroundColor,
-            borderTop,
           }}
         >
           {siteTitle} ©{year}
