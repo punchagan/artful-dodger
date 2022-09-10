@@ -39,8 +39,8 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
         xs: getAvatarSize(2, gutterSize),
         sm: getAvatarSize(2, gutterSize),
         md: getAvatarSize(2, gutterSize),
-        lg: getAvatarSize(3, gutterSize),
-        xl: getAvatarSize(3, gutterSize),
+        lg: getAvatarSize(4, gutterSize),
+        xl: getAvatarSize(4, gutterSize),
         xxl: getAvatarSize(4, gutterSize),
       };
       setAvatarSizes(sizes);
