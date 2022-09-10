@@ -62,7 +62,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
         <p>{/* For spacing */}</p>
         <Space direction="vertical">
           <p>{/* For spacing */}</p>
-          <Breadcrumb separator=">">
+          <Breadcrumb separator="-">
             <Breadcrumb.Item>
               <a href={`rooms?section=${section}`}>{sectionName}</a>
             </Breadcrumb.Item>
