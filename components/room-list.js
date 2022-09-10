@@ -74,7 +74,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
         style={{ paddingLeft: "24px", paddingRight: "24px" }}
         columnsCountBreakPoints={roomsColumnsCountBreakPoints}
       >
-        <Masonry gutter={gutterSize}>
+        <Masonry gutter={`${gutterSize}px`}>
           {metadata.map((room, idx) => {
             let href = `/room/?name=${room.id}&type=${section}`;
             return (

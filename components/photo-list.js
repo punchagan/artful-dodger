@@ -264,7 +264,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
         }
       >
         <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
-          <Masonry gutter={1}>
+          <Masonry gutter={"1px"}>
             {photos.slice(0, showCount).map((photo, idx) => (
               <div className="img-wrapper">
                 <Image
