@@ -103,3 +103,13 @@
     transition: opacity 0.8s;
   }
 }
+
+.logo {
+  float: left;
+  width: 50px;
+  height: 100%;
+  margin: auto 0px auto 24px;
+  padding: 0px;
+  background: url("/logo.jpeg") no-repeat center;
+  background-size: 30px;
+}

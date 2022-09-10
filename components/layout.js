@@ -34,6 +34,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
       </Head>
       <Layout style={{ backgroundColor }}>
         <Header style={{ backgroundColor, borderBottom }}>
+          <div className="logo" />
           <Menu
             mode="horizontal"
             triggerSubMenuAction="click"
