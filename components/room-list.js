@@ -76,7 +76,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
       >
         <Masonry gutter={`${gutterSize}px`}>
           {metadata.map((room, idx) => {
-            let href = `/room/?name=${room.id}&type=${section}`;
+            let href = `/room?name=${room.id}&type=${section}`;
             return (
               <a key={idx} href={href}>
                 <Space direction="vertical" style={{ textAlign: "center" }}>
