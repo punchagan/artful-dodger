@@ -10,7 +10,7 @@
     "export": "next export"
   },
   "dependencies": {
-    "antd": "^4.16.13",
+    "antd": "^4.23.1",
     "next": "^11.0.0",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
