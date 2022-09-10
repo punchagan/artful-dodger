@@ -266,10 +266,9 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
         <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
           <Masonry gutter={"1px"}>
             {photos.slice(0, showCount).map((photo, idx) => (
-              <div className="img-wrapper">
+              <div key={idx} className="img-wrapper">
                 <Image
                   onClick={() => openGalleryPhoto(idx)}
-                  key={idx}
                   alt={photo.title}
                   preview={false}
                   style={{ cursor: "pointer" }}
