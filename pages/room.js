@@ -68,7 +68,7 @@ export default function Room({ config }) {
 
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
-      <Space direction="horizontal" size={12}>
+      <Space direction="horizontal" size={24}>
         <p>{/* For spacing */}</p>
         <Space direction="vertical">
           <p>{/* For spacing */}</p>

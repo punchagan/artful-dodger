@@ -58,7 +58,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     <Loading />
   ) : (
     <>
-      <Space direction="horizontal" size={12}>
+      <Space direction="horizontal" size={24}>
         <p>{/* For spacing */}</p>
         <Space direction="vertical">
           <p>{/* For spacing */}</p>
@@ -70,7 +70,10 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
           <p>{/* For spacing */}</p>
         </Space>
       </Space>
-      <ResponsiveMasonry columnsCountBreakPoints={roomsColumnsCountBreakPoints}>
+      <ResponsiveMasonry
+        style={{ paddingLeft: "24px", paddingRight: "24px" }}
+        columnsCountBreakPoints={roomsColumnsCountBreakPoints}
+      >
         <Masonry gutter={gutterSize}>
           {metadata.map((room, idx) => {
             let href = `/room/?name=${room.id}&type=${section}`;
