@@ -258,9 +258,9 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
         next={fetchMore}
         hasMore={!allLoaded}
         loader={
-          <p style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center" }}>
             <Spin />
-          </p>
+          </div>
         }
       >
         <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
