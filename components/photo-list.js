@@ -266,15 +266,22 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
         <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
           <Masonry gutter={1}>
             {photos.slice(0, showCount).map((photo, idx) => (
-              <Image
-                onClick={() => openGalleryPhoto(idx)}
-                key={idx}
-                alt={photo.title}
-                preview={false}
-                style={{ cursor: "pointer" }}
-                src={photo.thumbnail}
-                fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
-              />
+              <div className="img-wrapper">
+                <Image
+                  onClick={() => openGalleryPhoto(idx)}
+                  key={idx}
+                  alt={photo.title}
+                  preview={false}
+                  style={{ cursor: "pointer" }}
+                  src={photo.thumbnail}
+                  fallback={`https://placehold.jp/20/777777/ffffff/600x800?text=${photo.title}`}
+                />
+                <div className="caption-container">
+                  <div className="caption-text">
+                    {`${photo?.name} by ${photo?.artistName}. ${photo?.medium}. ${photo?.size}. ${photo?.displayPrice}`}
+                  </div>
+                </div>
+              </div>
             ))}
           </Masonry>
         </ResponsiveMasonry>

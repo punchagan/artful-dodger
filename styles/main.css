@@ -71,3 +71,35 @@
     url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjM0Ij48cGF0aCBkPSJtIDE5LDMgLTIsLTIgLTE2LDE2IDE2LDE2IDEsLTEgLTE1LC0xNSAxNSwtMTUgeiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==")
     no-repeat center !important;
 }
+
+.caption-container {
+  position: relative;
+  visibility: hidden;
+  transition: opacity 0.5s;
+  z-index: 1000;
+  width: 100%;
+}
+
+.caption-text {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 0px 10px;
+  display: table;
+  font-size: 80%;
+  width: 100%;
+}
+
+.img-wrapper:hover .caption-container {
+  visibility: visible;
+  transition: opacity 0.8s;
+}
+
+@media screen and (max-width: 576px) {
+  .img-wrapper:hover .caption-container {
+    visibility: hidden;
+    transition: opacity 0.8s;
+  }
+}
