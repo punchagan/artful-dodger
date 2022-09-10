@@ -33,21 +33,17 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout style={{ backgroundColor }}>
-        <Header style={{ backgroundColor, borderBottom }}>
-          <div className="logo" />
+        <Header style={{ backgroundColor }}>
+          <a href="/" className="logo" />
           <Menu
             mode="horizontal"
             triggerSubMenuAction="click"
             selectedKeys={selectedKeys}
-            style={{ backgroundColor, borderBottom }}
+            style={{ backgroundColor }}
           >
             {paths.map((path, idx) =>
               path.subMenu ? (
-                <Menu.SubMenu
-                  key={path.name}
-                  title={path.title}
-                  style={{ backgroundColor, borderBottom }}
-                >
+                <Menu.SubMenu key={path.name} title={path.title} style={{ backgroundColor }}>
                   {path.subMenu.map((section) => (
                     <Menu.Item key={section.name}>
                       <Link href={`${path.name}?section=${section.name}`}>{section.title}</Link>
