@@ -78,7 +78,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
           {metadata.map((room, idx) => {
             let href = `/room/?name=${room.id}&type=${section}`;
             return (
-              <Link href={href}>
+              <a key={idx} href={href}>
                 <Space direction="vertical" style={{ textAlign: "center" }}>
                   <Avatar
                     style={{ cursor: "pointer" }}
@@ -88,7 +88,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
                   />
                   <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
                 </Space>
-              </Link>
+              </a>
             );
           })}
         </Masonry>
