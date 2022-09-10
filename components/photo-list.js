@@ -101,6 +101,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
 
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState();
 
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPhotoIndex, setZoomPhotoIndex] = useState(0);
@@ -141,9 +142,13 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     } else {
       setIsOpen(false);
     }
+    if (scrollPosition) {
+      window.scrollTo(0, scrollPosition);
+    }
   }, [photos?.length, openedArtwork]);
 
   const openGalleryPhoto = (idx) => {
+    setScrollPosition(window.pageYOffset);
     setActivePhotoIndex(idx);
     setIsOpen(true);
     setArtworkQueryParam(router, photos[idx].artwork_code);
