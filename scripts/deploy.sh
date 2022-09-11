@@ -18,7 +18,8 @@ yarn export
 rm -r "${EXPORT_DIR}/image"
 rm -r "${EXPORT_DIR}/thumbnail"
 
-# Copy the download script
+# Copy scripts for cron job
+cp scripts/download-pages "${EXPORT_DIR}"
 cp scripts/download-images "${EXPORT_DIR}"
 cp scripts/update-access-control "${EXPORT_DIR}"
 
