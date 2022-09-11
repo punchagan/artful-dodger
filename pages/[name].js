@@ -1,15 +1,33 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import BaseLayout from "../components/layout";
+import Loading from "../components/loading";
 import { Layout } from "antd";
-import { Descriptions } from "antd";
 import { makeGetStaticProps, footerPages } from "../lib/page-utils";
+import { remark } from "remark";
+import html from "remark-html";
 
 export default function Page({ config }) {
   const { Content } = Layout;
-  const { pageData, pageTitle, pages, title } = config;
+  const { pageTitle, pages, title, name } = config;
+  const [pageData, setPageData] = useState("");
+  useEffect(() => {
+    fetch(`${name}.md`)
+      .then((res) => res.text())
+      .then((data) => {
+        const processedContent = remark()
+          .use(html)
+          .process(data)
+          .then((text) => {
+            setPageData(text);
+          });
+      });
+  }, []);
+
   return (
     <BaseLayout pageTitle={`${pageTitle} — ${title}`} siteTitle={title} pages={pages}>
       <Content style={{ minWidth: "100%" }}>
+        {pageData === "" && <Loading />}
         <div dangerouslySetInnerHTML={{ __html: pageData }} />
       </Content>
     </BaseLayout>
