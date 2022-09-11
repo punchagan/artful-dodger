@@ -3,7 +3,7 @@ import Head from "next/head";
 import BaseLayout from "../components/layout";
 import Loading from "../components/loading";
 import { Layout } from "antd";
-import { makeGetStaticProps, footerPages } from "../lib/page-utils";
+import { makeGetStaticProps, pages } from "../lib/page-utils";
 import { remark } from "remark";
 import html from "remark-html";
 
@@ -35,7 +35,7 @@ export default function Page({ config }) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = ["/about"].concat(footerPages.map((it) => `/${it.name}`));
+  const paths = pages.map((it) => `/${it.name}`);
   return { paths, fallback: false };
 };
 
