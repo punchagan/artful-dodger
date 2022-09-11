@@ -2,7 +2,7 @@ import Head from "next/head";
 import BaseLayout from "../components/layout";
 import { Layout } from "antd";
 import { Descriptions } from "antd";
-import { pageStaticProps } from "../lib/page-utils";
+import { pageStaticProps, getAboutContent } from "../lib/page-utils";
 
 export default function About({ config }) {
   const { Content } = Layout;
@@ -15,4 +15,10 @@ export default function About({ config }) {
   );
 }
 
-export const getStaticProps = pageStaticProps;
+export const getStaticProps = async () => {
+  const aboutData = await getAboutContent();
+  const {
+    props: { config },
+  } = await pageStaticProps();
+  return { props: { config: { ...config, aboutData } } };
+};
