@@ -43,7 +43,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--download-dir", default="production")
+    parser.add_argument("-d", "--download-dir", default="pages")
 
     args = parser.parse_args()
     download_pages(args.download_dir)
