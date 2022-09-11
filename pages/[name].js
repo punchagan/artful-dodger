@@ -3,7 +3,8 @@ import Head from "next/head";
 import BaseLayout from "../components/layout";
 import Loading from "../components/loading";
 import { Layout } from "antd";
-import { makeGetStaticProps, pages } from "../lib/page-utils";
+import { makeGetStaticProps } from "../lib/page-utils";
+import { pages } from "../lib/constants";
 import { remark } from "remark";
 import html from "remark-html";
 
