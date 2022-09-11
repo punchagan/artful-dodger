@@ -11,7 +11,7 @@ export default function Rooms({ config }) {
   const { section } = router.query;
   const { loading, photos } = usePhotos(config.metadataUrl, imagePrefix);
   return (
-    <BaseLayout siteTitle={config.title} pageTitle={config.title}>
+    <BaseLayout siteTitle={config.title} pageTitle={config.title} pages={config.pages}>
       <RoomList photos={photos} loading={loading} section={section} />
     </BaseLayout>
   );

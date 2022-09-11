@@ -8,7 +8,7 @@ export default function Rooms({ config }) {
   const { loading, photos } = usePhotos(config.metadataUrl, imagePrefix);
   const filter = (it) => !it.sold;
   return (
-    <BaseLayout siteTitle={config.title} pageTitle={config.title}>
+    <BaseLayout siteTitle={config.title} pageTitle={config.title} pages={config.pages}>
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>
   );

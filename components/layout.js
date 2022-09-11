@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import "antd/dist/antd.css";
-import { Layout, Menu } from "antd";
+import { Col, Row, Layout, Menu } from "antd";
 const { Header, Content, Footer } = Layout;
 import { viewingRoomSections } from "../lib/constants";
 
-export default function BaseLayout({ children, siteTitle, pageTitle }) {
+export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
   const router = useRouter();
   const subMenu = viewingRoomSections;
   const paths = [
@@ -62,7 +62,18 @@ export default function BaseLayout({ children, siteTitle, pageTitle }) {
             backgroundColor,
           }}
         >
-          {siteTitle} ©{year}
+          <Row>
+            <Col span={24}>
+              {siteTitle} ©{year}
+            </Col>
+          </Row>
+          {pages?.map((page) => (
+            <Row key={page.name}>
+              <Col span={24}>
+                <a href={page.url}>{page.title}</a>
+              </Col>
+            </Row>
+          ))}
         </Footer>
       </Layout>
     </>
