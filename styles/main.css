@@ -139,3 +139,7 @@
     margin: 24px !important;
     padding: 0 !important;
 }
+
+.ant-spin-dot-item {
+    background-color: gray !important;
+}
