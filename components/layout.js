@@ -62,11 +62,6 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
             backgroundColor,
           }}
         >
-          <Row>
-            <Col span={24}>
-              {siteTitle} ©{year}
-            </Col>
-          </Row>
           {pages?.map((page) => (
             <Row key={page.name} className="footer-link">
               <Col span={24}>
@@ -74,6 +69,11 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
               </Col>
             </Row>
           ))}
+          <Row>
+            <Col span={24}>
+              {siteTitle} ©{year}
+            </Col>
+          </Row>
         </Footer>
       </Layout>
     </>
