@@ -6,7 +6,9 @@ import { Layout } from "antd";
 import { makeGetStaticProps } from "../lib/page-utils";
 import { pages } from "../lib/constants";
 import { remark } from "remark";
-import html from "remark-html";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
 
 export default function Page({ config }) {
   const { Content } = Layout;
@@ -17,7 +19,9 @@ export default function Page({ config }) {
       .then((res) => res.text())
       .then((data) => {
         const processedContent = remark()
-          .use(html)
+          .use(remarkParse)
+          .use(remarkRehype, { allowDangerousHtml: true })
+          .use(rehypeStringify, { allowDangerousHtml: true })
           .process(data)
           .then((text) => {
             setPageData(text);
