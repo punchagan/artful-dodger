@@ -67,11 +67,7 @@ export default function Room({ config }) {
   const sectionName = section ? section.title : toTitle(type);
 
   return (
-    <BaseLayout
-      siteTitle={config.title}
-      pageTitle={`${title} — ${config.title}`}
-      pages={config.pages}
-    >
+    <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
       <Space direction="horizontal" size={24}>
         <p>{/* For spacing */}</p>
         <Space direction="vertical">

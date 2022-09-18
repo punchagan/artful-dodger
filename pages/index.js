@@ -7,7 +7,7 @@ export default function Rooms({ config }) {
   const imagePrefix = devEnv && !config.forceCDN ? "" : config.imagePrefix;
   const { loading, photos } = usePhotos(config.metadataUrl, imagePrefix);
   return (
-    <BaseLayout siteTitle={config.title} pageTitle={config.title} pages={config.pages}>
+    <BaseLayout siteTitle={config.title} pageTitle={config.title}>
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} />
     </BaseLayout>
   );
