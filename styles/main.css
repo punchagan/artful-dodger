@@ -129,3 +129,13 @@
 .ant-menu-submenu-popup {
   top: 64px !important;
 }
+
+.footer-link a, .markdown-data a {
+    text-decoration: underline !important;
+    color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.ant-layout-footer {
+    margin: 24px !important;
+    padding: 0 !important;
+}

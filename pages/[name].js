@@ -33,7 +33,7 @@ export default function Page({ config }) {
     <BaseLayout pageTitle={`${pageTitle} — ${title}`} siteTitle={title} pages={pages}>
       <Content style={{ minWidth: "100%" }}>
         {pageData === "" && <Loading />}
-        <div dangerouslySetInnerHTML={{ __html: pageData }} />
+        <div class="markdown-data" dangerouslySetInnerHTML={{ __html: pageData }} />
       </Content>
     </BaseLayout>
   );

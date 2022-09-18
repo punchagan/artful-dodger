@@ -68,7 +68,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
             </Col>
           </Row>
           {pages?.map((page) => (
-            <Row key={page.name}>
+            <Row key={page.name} className="footer-link">
               <Col span={24}>
                 <a href={page.url}>{page.title}</a>
               </Col>
