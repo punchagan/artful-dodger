@@ -49,7 +49,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
                 </Menu.SubMenu>
               ) : (
                 <Menu.Item key={path.name}>
-                  <Link href={path.name}>{path.title}</Link>
+                  <a href={path.name}>{path.title}</a>
                 </Menu.Item>
               )
             )}
