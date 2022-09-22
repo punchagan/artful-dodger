@@ -143,3 +143,17 @@
 .ant-spin-dot-item {
     background-color: gray !important;
 }
+
+.ant-pagination-item a {
+    color: black !important;
+    background: rgba(200, 200, 200, 0.5) !important;
+}
+
+.ant-pagination-item-active a {
+  color: gray !important;
+}
+
+
+.ant-pagination-item-link {
+    background: rgba(200, 200, 200, 0.5) !important;
+}

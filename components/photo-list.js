@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button, Spin, BackTop } from "antd";
+import { Image, Tag, Button, Spin, BackTop, Pagination } from "antd";
 import Loading from "./loading";
 import Lightbox from "./lightbox";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
@@ -211,44 +211,67 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     paddingRight: "5px",
     marginRight: "5px",
   };
-  const caption = (photo) => (
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-        }}
-        className="caption-left"
-      >
-        <span>
-          {`${photo?.name} by `}
-          <a style={{ color: "#fff" }} href={`/room?name=${photo?.artistName}&type=artist`}>
-            {photo?.artistName}
-          </a>
-        </span>
-        <span style={{ opacity: "0.6", fontSize: "0.9em" }}>
-          <a style={linkStyle} href={`/room?name=${getMedium(photo)}&type=medium`}>
-            {`${photo?.medium}.`}
-          </a>
-          <a style={linkStyle} href={`/room?name=${getSize(photo)}&type=size`}>
-            {`${photo?.size}.`}
-          </a>
-          <a
-            style={linkStyle}
-            href={
-              photo?.sold
-                ? `/room?name=sold&type=misc`
-                : `/room?name=${getPriceRange(photo)}&type=price`
-            }
+  const caption = (photo) => {
+    const m = photo?.extraPhotos?.length;
+    return (
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            margin: "0 0 1em 0",
+          }}
+        >
+          <Pagination
+            defaultCurrent={1}
+            current={zoomPhotoIndex + 1}
+            total={m}
+            pageSize={1}
+            onChange={(num) => setZoomPhotoIndex(num - 1)}
+            size="small"
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+            }}
+            className="caption-left"
           >
-            {photo?.displayPrice}
-          </a>
-        </span>
+            <span>
+              {`${photo?.name} by `}
+              <a style={{ color: "#fff" }} href={`/room?name=${photo?.artistName}&type=artist`}>
+                {photo?.artistName}
+              </a>
+            </span>
+            <span style={{ opacity: "0.6", fontSize: "0.9em" }}>
+              <a style={linkStyle} href={`/room?name=${getMedium(photo)}&type=medium`}>
+                {`${photo?.medium}.`}
+              </a>
+              <a style={linkStyle} href={`/room?name=${getSize(photo)}&type=size`}>
+                {`${photo?.size}.`}
+              </a>
+              <a
+                style={linkStyle}
+                href={
+                  photo?.sold
+                    ? `/room?name=sold&type=misc`
+                    : `/room?name=${getPriceRange(photo)}&type=price`
+                }
+              >
+                {photo?.displayPrice}
+              </a>
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return loading ? (
     <Loading />
