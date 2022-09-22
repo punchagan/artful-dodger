@@ -58,18 +58,21 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
         <Content style={{ minWidth: "100%", padding: "0px" }}>{children}</Content>
         <Footer
           style={{
-            textAlign: "center",
             backgroundColor,
           }}
         >
-          {pages?.map((page) => (
-            <Row key={page.name} className="footer-link">
-              <Col span={24}>
-                <a href={page.url}>{page.title}</a>
-              </Col>
-            </Row>
-          ))}
-          <Row>
+          {pages && (
+            <div className="footer-links">
+              {pages?.map((page) => (
+                <Row key={page.name}>
+                  <Col span={24}>
+                    <a href={page.url}>{page.title}</a>
+                  </Col>
+                </Row>
+              ))}
+            </div>
+          )}
+          <Row style={{ textAlign: "center" }}>
             <Col span={24}>
               © {siteTitle} {year}
             </Col>

@@ -130,7 +130,11 @@
   top: 64px !important;
 }
 
-.footer-link a, .markdown-data a {
+.footer-links {
+    margin-bottom: 2em;
+}
+
+.footer-links a, .markdown-data a {
     text-decoration: underline !important;
     color: rgba(0, 0, 0, 0.85) !important;
 }
