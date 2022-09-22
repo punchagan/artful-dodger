@@ -238,8 +238,8 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             className="caption-left"
           >
