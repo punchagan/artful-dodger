@@ -102,25 +102,18 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   const [isOpen, setIsOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
   const [scrollPosition, setScrollPosition] = useState();
-
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPhotoIndex, setZoomPhotoIndex] = useState(0);
 
-  const activePhoto = photos[activePhotoIndex];
-  const extraPhotos = activePhoto?.extraPhotos;
-  const extraThumbnails = activePhoto?.extraThumbnails;
-  const activeZoomPhoto = isZoomed ? extraPhotos?.[zoomPhotoIndex] : activePhoto?.photo;
-  const activeThumbnail = isZoomed ? extraThumbnails?.[zoomPhotoIndex] : activePhoto?.thumbnail;
+  const [activePhoto, setActivePhoto] = useState();
+  const [nextPhoto, setNextPhoto] = useState();
+  const [prevPhoto, setPrevPhoto] = useState();
 
-  const n = isZoomed ? extraPhotos?.length : photos.length;
-  const nextIdx = isZoomed ? (zoomPhotoIndex + n + 1) % n : (activePhotoIndex + n + 1) % n;
-  const nextPhoto = isZoomed ? extraPhotos?.[nextIdx] : photos[nextIdx]?.photo;
-  const nextThumbnail = isZoomed ? extraThumbnails?.[nextIdx] : photos[nextIdx]?.thumbnail;
-  const prevIdx = isZoomed ? (zoomPhotoIndex + n - 1) % n : (activePhotoIndex + n - 1) % n;
-  const prevPhoto = isZoomed ? extraPhotos?.[prevIdx] : photos[prevIdx]?.photo;
-  const prevThumbnail = isZoomed ? extraThumbnails?.[prevIdx] : photos[prevIdx]?.thumbnail;
+  const [activeThumbnail, setActiveThumbnail] = useState();
+  const [nextThumbnail, setNextThumbnail] = useState();
+  const [prevThumbnail, setPrevThumbnail] = useState();
 
-  const enableZoomButton = extraPhotos?.length > 1;
+  const enableZoomButton = activePhoto?.extraPhotos?.length > 1;
   const photoCount = photos.length;
   const allLoaded = photoCount <= showCount;
   const fetchMore = () => setShowCount(showCount + pageSize);
@@ -130,6 +123,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     </div>
   );
 
+  const n = photos?.length;
   const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
 
   const router = useRouter();
@@ -147,6 +141,34 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     }
   }, [photos?.length, openedArtwork]);
 
+  useEffect(() => {
+    const photo = photos[activePhotoIndex];
+    const extraPhotos = photo?.extraPhotos;
+    const extraThumbnails = photo?.extraThumbnails;
+    const photoURL = extraPhotos?.[zoomPhotoIndex];
+    const thumbURL = extraThumbnails?.[zoomPhotoIndex];
+    const photoObj = { ...photo, photo: photoURL, thumbnail: thumbURL };
+    setActivePhoto(photoObj);
+    setActiveThumbnail(photoObj?.thumbnail);
+
+    const idx = isZoomed ? zoomPhotoIndex : activePhotoIndex;
+    const m = isZoomed ? extraPhotos?.length : n;
+
+    const nextIdx = (idx + m + 1) % m;
+    const nextPhoto = isZoomed
+      ? { ...photo, photo: extraPhotos?.[nextIdx], thumbnail: extraThumbnails?.[nextIdx] }
+      : photos[nextIdx];
+    setNextPhoto(nextPhoto?.photo);
+    setNextThumbnail(nextPhoto?.thumbnail);
+
+    const prevIdx = (idx + m - 1) % m;
+    const prevPhoto = isZoomed
+      ? { ...photo, photo: extraPhotos?.[prevIdx], thumbnail: extraThumbnails?.[prevIdx] }
+      : photos[prevIdx];
+    setPrevPhoto(prevPhoto?.photo);
+    setPrevThumbnail(prevPhoto?.thumbnail);
+  }, [activePhotoIndex, zoomPhotoIndex, isZoomed]);
+
   const openGalleryPhoto = (idx) => {
     setScrollPosition(window.pageYOffset);
     setActivePhotoIndex(idx);
@@ -161,15 +183,19 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     removeArtworkQueryParam(router);
   };
   const showPrev = () => {
-    isZoomed ? setZoomPhotoIndex(prevIdx) : setActivePhotoIndex(prevIdx);
+    const m = activePhoto?.extraPhotos?.length;
+    const idx = isZoomed ? (zoomPhotoIndex + m - 1) % m : (activePhotoIndex + n - 1) % n;
+    isZoomed ? setZoomPhotoIndex(idx) : setActivePhotoIndex(idx);
     if (!isZoomed) {
-      setArtworkQueryParam(router, photos[prevIdx].artwork_code);
+      setArtworkQueryParam(router, photos[idx].artwork_code);
     }
   };
   const showNext = () => {
-    isZoomed ? setZoomPhotoIndex(nextIdx) : setActivePhotoIndex(nextIdx);
+    const m = activePhoto?.extraPhotos?.length;
+    const idx = isZoomed ? (zoomPhotoIndex + m + 1) % m : (activePhotoIndex + n + 1) % n;
+    isZoomed ? setZoomPhotoIndex(idx) : setActivePhotoIndex(idx);
     if (!isZoomed) {
-      setArtworkQueryParam(router, photos[nextIdx].artwork_code);
+      setArtworkQueryParam(router, photos[idx].artwork_code);
     }
   };
 
@@ -226,7 +252,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           textAlign: "right",
         }}
       >
-        <span>{`${countIdx} of ${n}`}</span>
+        <span>{`${countIdx} of ${isZoomed ? activePhoto?.extraPhotos?.length : n}`}</span>
         {enableZoomButton ? (
           <Switch
             checkedChildren="Detailed"
@@ -289,7 +315,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
       {isOpen && (
         <Lightbox
           onCloseRequest={onClose}
-          mainSrc={activeZoomPhoto}
+          mainSrc={activePhoto?.photo}
           nextSrc={nextPhoto}
           prevSrc={prevPhoto}
           mainSrcThumbnail={activeThumbnail}
