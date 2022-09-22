@@ -139,7 +139,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   }, [photos?.length, openedArtwork]);
 
   useEffect(() => {
-    const photo = photos[activePhotoIndex];
+    const photo = photos?.[activePhotoIndex];
     const extraPhotos = photo?.extraPhotos;
     const extraThumbnails = photo?.extraThumbnails;
     const photoURL = extraPhotos?.[zoomPhotoIndex];
@@ -164,7 +164,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
       : photos[prevIdx];
     setPrevPhoto(prevPhoto?.photo);
     setPrevThumbnail(prevPhoto?.thumbnail);
-  }, [activePhotoIndex, zoomPhotoIndex, isZoomed]);
+  }, [activePhotoIndex, zoomPhotoIndex, isZoomed, photos?.length, openedArtwork]);
 
   const openGalleryPhoto = (idx) => {
     setScrollPosition(window.pageYOffset);
