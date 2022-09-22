@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button, Switch, Spin, BackTop } from "antd";
+import { Image, Tag, Button, Spin, BackTop } from "antd";
 import Loading from "./loading";
 import Lightbox from "./lightbox";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
@@ -123,8 +123,6 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   );
 
   const n = photos?.length;
-  const countIdx = (isZoomed ? zoomPhotoIndex : activePhotoIndex) + 1;
-
   const router = useRouter();
   const { artwork: openedArtwork } = router.query;
 
@@ -248,37 +246,6 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
             {photo?.displayPrice}
           </a>
         </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          color: "#fffff",
-          opacity: "0.6",
-          fontSize: "0.9em",
-          justifyContent: "space-between",
-          textAlign: "right",
-        }}
-      >
-        <span>{`${countIdx} of ${isZoomed ? activePhoto?.extraPhotos?.length : n}`}</span>
-        {enableZoomButton ? (
-          <Switch
-            checkedChildren="Detailed"
-            unCheckedChildren="Gallery"
-            style={{ cursor: "pointer" }}
-            type="primary"
-            disabled={!enableZoomButton}
-            checked={isZoomed}
-            onClick={() => {
-              setIsZoomed(!isZoomed);
-              setZoomPhotoIndex(!isZoomed ? 1 : 0);
-            }}
-            defaultChecked={false}
-          />
-        ) : (
-          <span />
-        )}
       </div>
     </div>
   );
