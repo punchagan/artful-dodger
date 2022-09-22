@@ -58,7 +58,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
         <Content style={{ minWidth: "100%", padding: "0px" }}>{children}</Content>
         <Footer
           style={{
-            textAlign: "left",
+            textAlign: "center",
             backgroundColor,
           }}
         >
