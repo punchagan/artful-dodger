@@ -68,10 +68,8 @@ export default function Room({ config }) {
 
   return (
     <BaseLayout siteTitle={config.title} pageTitle={`${title} — ${config.title}`}>
-      <Space direction="horizontal" size={24}>
-        <p>{/* For spacing */}</p>
+      <div style={{ textAlign: "center" }}>
         <Space direction="vertical">
-          <p>{/* For spacing */}</p>
           <Breadcrumb separator="-">
             <Breadcrumb.Item>
               <a href={`rooms?section=${type}`}>{sectionName}</a>
@@ -80,7 +78,7 @@ export default function Room({ config }) {
           </Breadcrumb>
           <p>{/* For spacing */}</p>
         </Space>
-      </Space>
+      </div>
       <PhotoList metadataUrl={config.metadataUrl} imagePrefix={imagePrefix} filter={filter} />
     </BaseLayout>
   );

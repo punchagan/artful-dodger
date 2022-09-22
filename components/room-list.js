@@ -58,10 +58,8 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
     <Loading />
   ) : (
     <>
-      <Space direction="horizontal" size={24}>
-        <p>{/* For spacing */}</p>
+      <div style={{ textAlign: "center" }}>
         <Space direction="vertical">
-          <p>{/* For spacing */}</p>
           <Breadcrumb separator="-">
             <Breadcrumb.Item>
               <a href={`rooms?section=${section}`}>{sectionName}</a>
@@ -69,7 +67,7 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
           </Breadcrumb>
           <p>{/* For spacing */}</p>
         </Space>
-      </Space>
+      </div>
       <ResponsiveMasonry
         style={{ paddingLeft: "24px", paddingRight: "24px" }}
         columnsCountBreakPoints={roomsColumnsCountBreakPoints}
