@@ -3,12 +3,14 @@ import Head from "next/head";
 import BaseLayout from "../components/layout";
 import Loading from "../components/loading";
 import { Layout } from "antd";
+import { InstagramOutlined, MailOutlined, WhatsAppOutlined } from "@ant-design/icons";
 import { makeGetStaticProps } from "../lib/page-utils";
 import { pages } from "../lib/constants";
 import { remark } from "remark";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import ReactDOMServer from "react-dom/server";
 
 export default function Page({ config }) {
   const { Content } = Layout;
@@ -23,7 +25,14 @@ export default function Page({ config }) {
           .use(remarkRehype, { allowDangerousHtml: true })
           .use(rehypeStringify, { allowDangerousHtml: true })
           .process(data)
-          .then((text) => {
+          .then((data) => {
+            const whatsAppIcon = ReactDOMServer.renderToString(<WhatsAppOutlined />);
+            const mailIcon = ReactDOMServer.renderToString(<MailOutlined />);
+            const instagramIcon = ReactDOMServer.renderToString(<InstagramOutlined />);
+            let text = data?.value
+              ?.replace("<WhatsAppOutlined />", whatsAppIcon)
+              .replace("<MailOutlined />", mailIcon)
+              .replace("<InstagramOutlined />", instagramIcon);
             setPageData(text);
           });
       });
