@@ -117,7 +117,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
   const allLoaded = photoCount <= showCount;
   const fetchMore = () => setShowCount(showCount + pageSize);
   const countDisplay = (
-    <div style={{ display: "grid", justifyContent: "left", margin: "24px" }}>
+    <div style={{ display: "grid", justifyContent: "center", margin: "2em" }}>
       <p>{`Showing ${Math.min(showCount, photoCount)} of ${photos.length}`}</p>
     </div>
   );
