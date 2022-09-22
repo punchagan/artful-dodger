@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Image, Tag, Button, Switch, Spin, BackTop } from "antd";
 import Loading from "./loading";
+import Lightbox from "./lightbox";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
 import { columnsCountBreakPoints } from "../lib/constants";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -182,20 +181,30 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
     setIsOpen(false);
     removeArtworkQueryParam(router);
   };
-  const showPrev = () => {
+  const showPrev = (ev) => {
+    const scrollZoomed = ev?.type === "scroll" && ev?.direction === "x";
+    setIsZoomed(scrollZoomed);
+
     const m = activePhoto?.extraPhotos?.length;
-    const idx = isZoomed ? (zoomPhotoIndex + m - 1) % m : (activePhotoIndex + n - 1) % n;
-    isZoomed ? setZoomPhotoIndex(idx) : setActivePhotoIndex(idx);
-    if (!isZoomed) {
+    const idx = scrollZoomed ? (zoomPhotoIndex + m - 1) % m : (activePhotoIndex + n - 1) % n;
+    if (!scrollZoomed) {
+      setZoomPhotoIndex(0);
       setArtworkQueryParam(router, photos[idx].artwork_code);
+    } else {
+      setZoomPhotoIndex(idx);
     }
   };
-  const showNext = () => {
+  const showNext = (ev) => {
+    const scrollZoomed = ev?.type === "scroll" && ev?.direction === "x";
+    setIsZoomed(scrollZoomed);
+
     const m = activePhoto?.extraPhotos?.length;
-    const idx = isZoomed ? (zoomPhotoIndex + m + 1) % m : (activePhotoIndex + n + 1) % n;
-    isZoomed ? setZoomPhotoIndex(idx) : setActivePhotoIndex(idx);
-    if (!isZoomed) {
+    const idx = scrollZoomed ? (zoomPhotoIndex + m + 1) % m : (activePhotoIndex + n + 1) % n;
+    if (!scrollZoomed) {
+      setZoomPhotoIndex(0);
       setArtworkQueryParam(router, photos[idx].artwork_code);
+    } else {
+      setZoomPhotoIndex(idx);
     }
   };
 
