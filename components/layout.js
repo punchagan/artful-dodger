@@ -71,7 +71,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
           ))}
           <Row>
             <Col span={24}>
-              {siteTitle} ©{year}
+              © {siteTitle} {year}
             </Col>
           </Row>
         </Footer>
