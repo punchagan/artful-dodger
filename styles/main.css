@@ -161,3 +161,7 @@
 .ant-pagination-item-link {
     background: rgba(200, 200, 200, 0.5) !important;
 }
+
+.ril-zoom-in, .ril-zoom-out {
+    display: none;
+}
