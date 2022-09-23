@@ -40,6 +40,34 @@ class Lightbox extends ReactImageLightbox {
       this.requestMoveNext(ev);
     }
   }
+
+  // Get sizing for when an image is larger than the window
+  getFitSizes(width, height, stretch) {
+    const boxSize = this.getLightboxRect();
+    let maxHeight = boxSize.height - this.props.yImagePadding * 2;
+    let maxWidth = boxSize.width - this.props.xImagePadding * 2;
+
+    if (!stretch) {
+      maxHeight = Math.min(maxHeight, height);
+      maxWidth = Math.min(maxWidth, width);
+    }
+
+    const maxRatio = maxWidth / maxHeight;
+    const srcRatio = width / height;
+
+    if (maxRatio > srcRatio) {
+      // height is the constraining dimension of the photo
+      return {
+        width: (width * maxHeight) / height,
+        height: maxHeight,
+      };
+    }
+
+    return {
+      width: maxWidth,
+      height: (height * maxWidth) / width,
+    };
+  }
 }
 
 export default Lightbox;
