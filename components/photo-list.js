@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Image, Tag, Button, Spin, BackTop, Pagination } from "antd";
+import { Image, Tag, Button, Spin, BackTop } from "antd";
 import Loading from "./loading";
 import Lightbox from "./lightbox";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { columnsCountBreakPoints } from "../lib/constants";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Slider } from "./slider";
 
 const thumbnailUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
 const photoUrl = (id, imagePrefix) => `${imagePrefix}/image/${id}`;
@@ -224,13 +225,14 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
             margin: "0 0 1em 0",
           }}
         >
-          <Pagination
-            defaultCurrent={1}
-            current={zoomPhotoIndex + 1}
-            total={m}
-            pageSize={1}
-            onChange={(num) => setZoomPhotoIndex(num - 1)}
-            size="small"
+          <Slider
+            size="normal"
+            length={m}
+            clickable={true}
+            index={zoomPhotoIndex}
+            onClick={(num) => {
+              setZoomPhotoIndex(num);
+            }}
           />
         </div>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
