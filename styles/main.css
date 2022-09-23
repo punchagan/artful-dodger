@@ -131,37 +131,38 @@
 }
 
 .footer-links {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
-.footer-links a, .markdown-data a {
-    text-decoration: underline !important;
-    color: rgba(0, 0, 0, 0.85) !important;
+.footer-links a,
+.markdown-data a {
+  text-decoration: underline !important;
+  color: rgba(0, 0, 0, 0.85) !important;
 }
 
 .ant-layout-footer {
-    margin: 24px !important;
-    padding: 0 !important;
+  margin: 24px !important;
+  padding: 0 !important;
 }
 
 .ant-spin-dot-item {
-    background-color: gray !important;
+  background-color: gray !important;
 }
 
 .ant-pagination-item a {
-    color: black !important;
-    background: rgba(200, 200, 200, 0.5) !important;
+  color: black !important;
+  background: rgba(200, 200, 200, 0.5) !important;
 }
 
 .ant-pagination-item-active a {
   color: gray !important;
 }
 
-
 .ant-pagination-item-link {
-    background: rgba(200, 200, 200, 0.5) !important;
+  background: rgba(200, 200, 200, 0.5) !important;
 }
 
-.ril-zoom-in, .ril-zoom-out {
-    display: none;
+.ril-zoom-in,
+.ril-zoom-out {
+  display: none;
 }
