@@ -102,6 +102,9 @@
     visibility: hidden;
     transition: opacity 0.8s;
   }
+  .ril__navButtons {
+    display: none;
+  }
 }
 
 .logo {
