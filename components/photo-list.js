@@ -226,7 +226,7 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           }}
         >
           <Slider
-            size="normal"
+            size="small"
             length={m}
             clickable={true}
             index={zoomPhotoIndex}
