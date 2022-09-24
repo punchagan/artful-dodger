@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Image, Tag, Button, Spin, BackTop } from "antd";
+import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import Loading from "./loading";
 import Lightbox from "./lightbox";
 import { getMedium, getSize, getPriceRange, toTitle } from "../lib/data-utils";
@@ -314,22 +315,50 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
       </InfiniteScroll>
       {allLoaded && countDisplay}
       {isOpen && (
-        <Lightbox
-          onCloseRequest={onClose}
-          mainSrc={activePhoto?.photo}
-          nextSrc={nextPhoto}
-          prevSrc={prevPhoto}
-          mainSrcThumbnail={activeThumbnail}
-          nextSrcThumbnail={nextThumbnail}
-          prevSrcThumbnail={prevThumbnail}
-          imageCaption={caption(activePhoto)}
-          enableZoom={true}
-          yImagePadding={96}
-          xImagePadding={0}
-          onMovePrevRequest={showPrev}
-          onMoveNextRequest={showNext}
-          animationDisabled={true}
-        />
+        <>
+          <div className="zoomNavButtons" style={{ fontSize: "20px", color: "lightgray" }}>
+            <LeftCircleOutlined
+              style={{
+                position: "fixed",
+                top: `${window.innerHeight / 2 - 10}px`,
+                left: "80px",
+                zIndex: "2000",
+              }}
+              onClick={() => {
+                let m = activePhoto?.extraPhotos?.length;
+                setZoomPhotoIndex((zoomPhotoIndex + m - 1) % m);
+              }}
+            />
+            <RightCircleOutlined
+              style={{
+                position: "fixed",
+                top: `${window.innerHeight / 2 - 10}px`,
+                right: "80px",
+                zIndex: "2000",
+              }}
+              onClick={() => {
+                let m = activePhoto?.extraPhotos?.length;
+                setZoomPhotoIndex((zoomPhotoIndex + m + 1) % m);
+              }}
+            />
+          </div>
+          <Lightbox
+            onCloseRequest={onClose}
+            mainSrc={activePhoto?.photo}
+            nextSrc={nextPhoto}
+            prevSrc={prevPhoto}
+            mainSrcThumbnail={activeThumbnail}
+            nextSrcThumbnail={nextThumbnail}
+            prevSrcThumbnail={prevThumbnail}
+            imageCaption={caption(activePhoto)}
+            enableZoom={true}
+            yImagePadding={96}
+            xImagePadding={0}
+            onMovePrevRequest={showPrev}
+            onMoveNextRequest={showNext}
+            animationDisabled={true}
+          />
+        </>
       )}
     </>
   );
