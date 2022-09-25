@@ -31,7 +31,9 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
       </Head>
       <Layout style={{ backgroundColor }}>
         <Header style={{ backgroundColor }}>
-          <a href="/" className="logo" />
+          <Link href="/">
+            <a className="logo" />
+          </Link>
           <Menu
             mode="horizontal"
             triggerSubMenuAction="click"
@@ -49,7 +51,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
                 </Menu.SubMenu>
               ) : (
                 <Menu.Item key={path.name}>
-                  <a href={path.name}>{path.title}</a>
+                  <Link href={path.name}>{path.title}</Link>
                 </Menu.Item>
               )
             )}
@@ -66,7 +68,7 @@ export default function BaseLayout({ children, siteTitle, pageTitle, pages }) {
               {pages?.map((page) => (
                 <Row key={page.name}>
                   <Col span={24}>
-                    <a href={page.url}>{page.title}</a>
+                    <Link href={page.url}>{page.title}</Link>
                   </Col>
                 </Row>
               ))}

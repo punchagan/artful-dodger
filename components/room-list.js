@@ -62,7 +62,9 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
         <Space direction="vertical">
           <Breadcrumb separator="-">
             <Breadcrumb.Item>
-              <a href={`rooms?section=${section}`}>{sectionName}</a>
+              <Link href={`/rooms?section=${section}`}>
+                <a>{sectionName}</a>
+              </Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <p>{/* For spacing */}</p>
@@ -74,19 +76,20 @@ function RoomsSection({ rooms, section, sectionName, photos, loading }) {
       >
         <Masonry gutter={`${gutterSize}px`}>
           {metadata.map((room, idx) => {
-            let href = `/room?name=${room.id}&type=${section}`;
             return (
-              <a key={idx} href={href}>
-                <Space direction="vertical" style={{ textAlign: "center" }}>
-                  <Avatar
-                    style={{ cursor: "pointer" }}
-                    shape="square"
-                    size={avatarSizes}
-                    src={room.thumbnail}
-                  />
-                  <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
-                </Space>
-              </a>
+              <Link key={idx} href={`/room?name=${room.id}&type=${section}`}>
+                <a>
+                  <Space direction="vertical" style={{ textAlign: "center" }}>
+                    <Avatar
+                      style={{ cursor: "pointer" }}
+                      shape="square"
+                      size={avatarSizes}
+                      src={room.thumbnail}
+                    />
+                    <Typography.Text style={{ cursor: "pointer" }}>{room.title}</Typography.Text>
+                  </Space>
+                </a>
+              </Link>
             );
           })}
         </Masonry>

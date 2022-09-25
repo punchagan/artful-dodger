@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Image, Tag, Button, Spin, BackTop } from "antd";
 import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import Loading from "./loading";
@@ -248,27 +249,26 @@ export default function PhotoList({ metadataUrl, filter, imagePrefix, random = t
           >
             <span>
               {`${photo?.name} by `}
-              <a style={{ color: "#fff" }} href={`/room?name=${photo?.artistName}&type=artist`}>
-                {photo?.artistName}
-              </a>
+              <Link href={`/room?name=${photo?.artistName}&type=artist`}>
+                <a style={{ color: "#fff" }}>{photo?.artistName}</a>
+              </Link>
             </span>
             <span style={{ opacity: "0.6", fontSize: "0.9em" }}>
-              <a style={linkStyle} href={`/room?name=${getMedium(photo)}&type=medium`}>
-                {`${photo?.medium}.`}
-              </a>
-              <a style={linkStyle} href={`/room?name=${getSize(photo)}&type=size`}>
-                {`${photo?.size}.`}
-              </a>
-              <a
-                style={linkStyle}
+              <Link href={`/room?name=${getMedium(photo)}&type=medium`}>
+                <a style={linkStyle}>{`${photo?.medium}.`}</a>
+              </Link>
+              <Link href={`/room?name=${getSize(photo)}&type=size`}>
+                <a style={linkStyle}>{`${photo?.size}.`}</a>
+              </Link>
+              <Link
                 href={
                   photo?.sold
                     ? `/room?name=sold&type=misc`
                     : `/room?name=${getPriceRange(photo)}&type=price`
                 }
               >
-                {photo?.displayPrice}
-              </a>
+                <a style={linkStyle}>{photo?.displayPrice}</a>
+              </Link>
             </span>
           </div>
         </div>

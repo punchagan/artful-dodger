@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 import BaseLayout from "../components/layout";
 import PhotoList from "../components/photo-list";
 import { pageStaticProps } from "../lib/page-utils";
@@ -72,7 +73,9 @@ export default function Room({ config }) {
         <Space direction="vertical">
           <Breadcrumb separator="-">
             <Breadcrumb.Item>
-              <a href={`rooms?section=${type}`}>{sectionName}</a>
+              <Link href={`/rooms?section=${type}`}>
+                <a>{sectionName}</a>
+              </Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{title}</Breadcrumb.Item>
           </Breadcrumb>
