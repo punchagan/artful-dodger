@@ -3,8 +3,22 @@ import "react-image-lightbox/style.css";
 
 const ACTION_NONE = 0;
 const MIN_SWIPE_DISTANCE = 50;
+const SOURCE_TOUCH = 2;
+
+const touchIsTargetMatchImage = (target) => {
+  return target && /(ril-image-current|ril-inner)/.test(target.className);
+};
 
 class Lightbox extends ReactImageLightbox {
+  handleTouchStart(event) {
+    if (this.shouldHandleEvent(SOURCE_TOUCH) && touchIsTargetMatchImage(event.target)) {
+      [].forEach.call(event.changedTouches, (eventTouch) =>
+        this.addPointer(ReactImageLightbox.parseTouchPointer(eventTouch))
+      );
+      this.multiPointerStart(event);
+    }
+  }
+
   handleSwipeEnd(event) {
     const xDiff = this.swipeEndX - this.swipeStartX;
     const yDiff = this.swipeEndY - this.swipeStartY;
