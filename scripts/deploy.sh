@@ -9,8 +9,12 @@ pushd $(dirname $0)/..
 rm -rf "${EXPORT_DIR}/"
 rm -rf next.config.js
 
-# Build the site
+# Copy the env file
 cp production/.env.local.artful-dodger.muse-amuse.in .env.local
+# Download the pages
+./scripts/download-pages
+
+# Build the site
 yarn build
 yarn export
 

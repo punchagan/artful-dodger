@@ -13,8 +13,16 @@ echo "module.exports = {
   basePath: '/artful-dodger',
 }" > next.config.js
 
-# Build the site
+# Copy the env file
 cp .env.local.default .env.local
+
+# Setup pages
+for page in about faq privacy terms return;
+do
+    cp README.md public/$page.md
+done
+
+# Build the site
 yarn build
 yarn export
 
