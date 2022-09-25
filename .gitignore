@@ -32,3 +32,10 @@ yarn-error.log*
 .env.production.local
 /public/metadata.json
 /production/
+
+# Ignore pages
+/public/about.md
+/public/faq.md
+/public/terms.md
+/public/privacy.md
+/public/return.md
