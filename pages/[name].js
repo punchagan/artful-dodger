@@ -36,7 +36,7 @@ export default function Page({ config }) {
             setPageData(text);
           });
       });
-  }, []);
+  });
 
   return (
     <BaseLayout pageTitle={`${pageTitle} — ${title}`} siteTitle={title} pages={pages}>
