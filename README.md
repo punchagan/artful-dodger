@@ -39,6 +39,23 @@ can use a `../` prefix on your thumbnails, if thumbnails don't live in an
 ALso, remove the `FORCE_CDN` configuration, if you wish to not use CDN when
 developing locally.
 
+### Troubleshooting
+
+With newer versions of Nodejs (18+?), if you run into the following error:
+
+``` sh
+  opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+  library: 'digital envelope routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_EVP_UNSUPPORTED'
+```
+
+you can set the `NODE_OPTIONS` env var to allow the legacy openssl provider.
+
+``` sh
+export NODE_OPTIONS=--openssl-legacy-provider
+```
+
 ## Build & Deploy
 
 `yarn build` builds the site. And `yarn export` would export the site to a
