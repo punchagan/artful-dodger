@@ -14,7 +14,7 @@ echo "module.exports = {
 }" > next.config.js
 
 # Copy the env file
-cp .env.local.default .env.local
+cp env.local.default .env.local
 
 # Setup pages
 for page in about faq privacy terms return;

@@ -21,7 +21,7 @@ directory from where you are serving the "built" site.
 
 ### Configuration
 
-To configure your site, copy the `.env.local.default` file to `.env.local` and
+To configure your site, copy the `env.local.default` file to `.env.local` and
 edit it to point to your Google Spreadsheet and your CDN, if you are using one.
 
 You can either use a free service like opensheet.vercel.app to convert the
